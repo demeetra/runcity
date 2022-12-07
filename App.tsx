@@ -9,6 +9,7 @@
  */
 
 import React, {type PropsWithChildren} from 'react';
+import SampleInput from './src/SampleInput';
 import {
   SafeAreaView,
   ScrollView,
@@ -70,6 +71,7 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
+      <SampleInput />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>

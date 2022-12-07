@@ -14,6 +14,7 @@ const App = () => {
       <View style={{alignItems: 'center'}}>
         <Text style={{fontSize: 24}}>React Native Web App Example</Text>
       </View>
+      <SampleInput />
     </SafeAreaView>
   );
 };

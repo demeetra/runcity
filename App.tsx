@@ -15,9 +15,7 @@ const App = () => {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={barStyle} backgroundColor={backgroundStyle.backgroundColor} />
       <ScreenState>
-        <ActualEventsState>
           <MainLayout />
-        </ActualEventsState>
       </ScreenState>
     </SafeAreaView>
   );

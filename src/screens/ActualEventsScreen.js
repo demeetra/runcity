@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { THEME } from '../theme'
 import { AppLoader } from '../components/ui/AppLoader'
 import { AppButton } from '../components/ui/AppButton'
@@ -50,7 +50,9 @@ export const ActualEventsScreen = () => {
           renderItem={({ item }) => (
             <View>
               <Text style={{textAlign: "center"}}>{item.title}</Text>
-              <Image source={{ uri: item.image}} style={{width: deviceWidth, height: 150}} />
+              <TouchableOpacity onPress={() => (changeScreen(item.id))}>
+                <Image source={{ uri: item.image}} style={{width: deviceWidth, height: 150}} />
+              </TouchableOpacity>
             </View>
           )}
       />

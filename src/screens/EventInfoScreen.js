@@ -30,7 +30,6 @@ export const EventInfoScreen = () => {
       </View>
     )
   }
-  console.log('EventInfoScreen', eventInfo)
   return (
     <View style={{ width: deviceWidth }}>
       <Text style={{textAlign: "center"}}>{eventInfo.title}</Text>

@@ -36,7 +36,6 @@ export const EventInfoState = ({ children }) => {
       const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
       const json = await response.json()
       const eventInfo = json.data.filter((item) => (item.id == eventId) )[0]
-      console.log('fetchEventInfo', eventInfo.id)
       dispatch( { type: EVENT_INFO_FETCH, eventInfo } )
     } catch (exc) {
         showError('Something went wrong...')

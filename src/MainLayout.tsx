@@ -3,7 +3,9 @@ import { View, StyleSheet, Text } from 'react-native';
 import { Navbar } from './components/Navbar';
 import { THEME } from './theme';
 import { ActualEventsScreen } from './screens/ActualEventsScreen';
+import { EventInfoScreen } from './screens/EventInfoScreen';
 import { ActualEventsState } from './context/actual_events/ActualEventsState';
+import { EventInfoState } from './context/event_info/EventInfoState';
 import { ScreenContext } from './context/screen/screenContext';
 
 export const MainLayout = () => {
@@ -15,15 +17,17 @@ export const MainLayout = () => {
     </ActualEventsState>
   );
 
-  let specificEvent = (
-    <Text>eventId = {eventId}</Text>
+  let eventInfo = (
+    <EventInfoState>
+      <EventInfoScreen />
+    </EventInfoState>
   );
 
   return (
     <View style={styles.wrapper}>
       <Navbar name='Runcity' backAction={eventId == null ? null : () => (changeScreen(null))} />
       <View style={styles.container}>
-      { eventId == null ? actualEvents : specificEvent }
+      { eventId == null ? actualEvents : eventInfo }
       </View>
     </View>
   )

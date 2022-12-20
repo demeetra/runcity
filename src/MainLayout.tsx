@@ -14,7 +14,8 @@ export const MainLayout = () => {
   const { eventId, eventPlay, inProfile, changeScreen } = useContext(ScreenContext);
 
 
-  let profileAction = () => (changeScreen({inProfile: true}));
+  const profileAction = () => (changeScreen({inProfile: true}));
+  const nameAction = () => (changeScreen({eventId: null, eventPlay: null, inProfile: null}));
 
   let content = null;
   let backAction = null;
@@ -46,7 +47,7 @@ export const MainLayout = () => {
 
   return (
     <View style={styles.wrapper}>
-      <Navbar name='Runcity' backAction={backAction} profileAction={profileAction}/>
+      <Navbar name='Runcity' nameAction={nameAction} backAction={backAction} profileAction={profileAction}/>
       <View style={styles.container}>
       {content}
       </View>

@@ -31,11 +31,11 @@ export const EventInfoState = ({ children }) => {
   const fetchEventInfo = async (eventId) => {
     showLoader()
     clearError()
-    const apiUrl = ip_address + 'api/v1/games'
+    const apiUrl = ip_address + 'api/v1/events'
     try {
       const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
       const json = await response.json()
-      const eventInfo = json.data.filter((item) => (item.id == eventId) )[0]
+      const eventInfo = json.filter((item) => (item.id == eventId) )[0]
       dispatch( { type: EVENT_INFO_FETCH, eventInfo } )
     } catch (exc) {
         showError('Something went wrong...')

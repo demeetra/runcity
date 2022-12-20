@@ -31,11 +31,11 @@ export const ActualEventsState = ({ children }) => {
   const fetchActualEvents = async () => {
     showLoader()
     clearError()
-    const apiUrl = ip_address + 'api/v1/games'
+    const apiUrl = ip_address + 'api/v1/events'
     try {
       const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
       const json = await response.json()
-      const actualEvents = json.data
+      const actualEvents = json
       dispatch( { type: ACTUAL_EVENTS_FETCH, actualEvents } )
     } catch (exc) {
         showError('Something went wrong...')

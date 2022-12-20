@@ -50,7 +50,7 @@ export const ActualEventsScreen = () => {
           renderItem={({ item }) => (
             <View>
               <Text style={{textAlign: "center"}}>{item.title}</Text>
-              <TouchableOpacity onPress={() => (changeScreen(item.id))}>
+              <TouchableOpacity onPress={() => (changeScreen({eventId: item.id}))}>
                 <Image source={{ uri: item.image}} style={{width: deviceWidth, height: 150}} />
               </TouchableOpacity>
             </View>

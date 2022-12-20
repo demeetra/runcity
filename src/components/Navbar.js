@@ -4,7 +4,7 @@ import { THEME } from '../theme'
 import { AppButton } from './ui/AppButton'
 import { AppTextBold } from './ui/AppTextBold'
 
-export const Navbar = ({ name, backAction }) => {
+export const Navbar = ({ name, backAction, profileAction }) => {
   return (
     <View
       style={{
@@ -15,8 +15,9 @@ export const Navbar = ({ name, backAction }) => {
         })
       }}
     >
-      { backAction && <AppButton onPress={backAction}>Back</AppButton> }
+      <AppButton onPress={backAction} opacity={backAction == null ? 0 : 1}>Back</AppButton>
       <AppTextBold style={styles.text}>{name}</AppTextBold>
+      <AppButton onPress={profileAction}>Profile</AppButton>
     </View>
   )
 }
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
   navbar: {
     height: 70,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     paddingBottom: 10
   },
   navbarAndroid: {
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Platform.OS === 'ios' ? THEME.MAIN_COLOR : '#fff',
-    fontSize: 20
+    fontSize: 20,
+    textAlign: 'center',
   }
 })

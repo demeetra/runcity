@@ -4,15 +4,17 @@ import { screenReducer } from './screenReducer'
 import { CHANGE_SCREEN } from '../types'
 
 export const ScreenState = ({ children }) => {
-  const [state, dispatch] = useReducer(screenReducer, null)
+  const [state, dispatch] = useReducer(screenReducer, {eventId: null, eventPlay: null, inProfile: null})
 
-  const changeScreen = id => dispatch({ type: CHANGE_SCREEN, payload: id })
+  const changeScreen = payload => dispatch({ type: CHANGE_SCREEN, payload })
 
   return (
     <ScreenContext.Provider
       value={{
         changeScreen,
-        eventId: state
+        eventId: state.eventId,
+        eventPlay: state.eventPlay,
+        inProfile: state.inProfile,
       }}
     >
       {children}

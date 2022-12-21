@@ -6,13 +6,24 @@ import { AppLoader } from '../components/ui/AppLoader'
 import { ScreenContext } from '../context/screen/screenContext'
 import { EventPlayContext } from '../context/event_play/EventPlayContext'
 
-function formatCheckpoint(cpinfo, deviceWidth) {
+function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAddr, setTextAddr, textAnsw, setTextAnsw) {
   if (cpinfo == null)
     return;
+  if (!(cpinfo.id in textAddr)) {
+    setTextAddr({...textAddr, [cpinfo.id]: cpinfo.address})
+  }
+  if (!(cpinfo.id in textAnsw)) {
+    setTextAnsw({...textAnsw, [cpinfo.id]: cpinfo.answer})
+  }
   const addressInput = cpinfo.is_riddle && (
     <View>
       <Text>Адрес:</Text>
-      <TextInput style={styles.input}/>
+      <TextInput
+        style={styles.input}
+        onChangeText={newText => setTextAddr({...textAddr, [cpinfo.id]: newText})}
+        onEndEditing={() => updateCheckpointEventPlay(cpinfo.id, {answer: textAddr[cpinfo.id]})}
+        defaultValue={textAddr[cpinfo.id]}
+      />
     </View>
   );
   const imageElement = cpinfo.image && (
@@ -26,14 +37,21 @@ function formatCheckpoint(cpinfo, deviceWidth) {
       {imageElement}
       {addressInput}
       <Text>Ответ:</Text>
-      <TextInput style={styles.input}/>
+      <TextInput
+        style={styles.input}
+        onChangeText={newText => setTextAnsw({...textAnsw, [cpinfo.id]: newText})}
+        onEndEditing={() => updateCheckpointEventPlay(cpinfo.id, {answer: textAnsw[cpinfo.id]})}
+        defaultValue={textAnsw[cpinfo.id]}
+      />
     </View>
   );
 };
 
 export const EventPlayScreen = () => {
   const { eventId, checkpointId, changeScreen } = useContext(ScreenContext)
-  const { titles, checkpoints, fetchTitlesEventPlay, fetchCheckpointEventPlay, loading, error } = useContext(EventPlayContext)
+  const { titles, checkpoints, fetchTitlesEventPlay, fetchCheckpointEventPlay, updateCheckpointEventPlay, loading, error } = useContext(EventPlayContext)
+  const [textAddr, setTextAddr] = useState({});
+  const [textAnsw, setTextAnsw] = useState({});
 
   /*useEffect(() => {
     if (titles != null) {
@@ -45,15 +63,10 @@ export const EventPlayScreen = () => {
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   )
 
-  console.log('checkpointId', checkpointId)
-
   const loadTitlesEventPlay = useCallback( async () => await fetchTitlesEventPlay(eventId), [eventId, fetchTitlesEventPlay] )
   useEffect( () => { loadTitlesEventPlay() }, [] )
   const loadCheckpointEventPlay = useCallback( async () => await fetchCheckpointEventPlay(checkpointId), [checkpointId, fetchCheckpointEventPlay])
   useEffect( () => { loadCheckpointEventPlay() }, [checkpointId] )
-
-  console.log('titles', titles)
-  console.log('checkpoints', checkpoints)
 
   const checkpointsView = (<FlatList
     horizontal
@@ -66,7 +79,7 @@ export const EventPlayScreen = () => {
     )}
   />);
 
-  const checkpointInfo = checkpointId == null ? null : formatCheckpoint(checkpoints[checkpointId], deviceWidth);
+  const checkpointInfo = checkpointId == null ? null : formatCheckpoint(checkpoints[checkpointId], deviceWidth, updateCheckpointEventPlay, textAddr, setTextAddr, textAnsw, setTextAnsw);
 
   if (loading) {
     return <AppLoader />

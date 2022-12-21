@@ -49,7 +49,6 @@ export const EventPlayState = ({ children }) => {
   };
 
   const fetchCheckpointEventPlay = async (checkpointId) => {
-    console.log('fetchCheckpointEventPlay', checkpointId)
     if (!checkpointId)
       return;
     showLoader()
@@ -59,7 +58,6 @@ export const EventPlayState = ({ children }) => {
       const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
       const json = await response.json()
       const update = { [checkpointId]: json }
-      console.log('UPDATE', update)
       dispatch( { type: EVENT_PLAY_FETCH_CHECKPOINT, checkpoints: update } )
     } catch (exc) {
         showError('Something went wrong...')
@@ -68,6 +66,27 @@ export const EventPlayState = ({ children }) => {
       hideLoader()
     }
   };
+
+  const updateCheckpointEventPlay = async (checkpointId, params) => {
+    showLoader()
+    clearError()
+    const apiUrl = ip_address + 'api/v1/checkpoints/' + checkpointId;
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      })
+      const json = await response.json()
+      const update = { [checkpointId]: json }
+      dispatch( { type: EVENT_PLAY_FETCH_CHECKPOINT, checkpoints: update } )
+    } catch (exc) {
+        showError('Something went wrong...')
+        console.log(exc)
+    } finally {
+      hideLoader()
+    }
+  }
 
   return (
     <EventPlayContext.Provider
@@ -78,6 +97,7 @@ export const EventPlayState = ({ children }) => {
         error: state.error,
         fetchTitlesEventPlay,
         fetchCheckpointEventPlay,
+        updateCheckpointEventPlay,
       }}
     >
       {children}

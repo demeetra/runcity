@@ -8,14 +8,16 @@ import { EventPlayScreen } from './screens/EventPlayScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { ActualEventsState } from './context/actual_events/ActualEventsState';
 import { EventInfoState } from './context/event_info/EventInfoState';
+import { EventPlayState } from './context/event_play/EventPlayState';
 import { ScreenContext } from './context/screen/screenContext';
+
 
 export const MainLayout = () => {
   const { eventId, eventPlay, inProfile, changeScreen } = useContext(ScreenContext);
 
 
   const profileAction = () => (changeScreen({inProfile: true}));
-  const nameAction = () => (changeScreen({eventId: null, eventPlay: null, inProfile: null}));
+  const nameAction = () => (changeScreen({eventId: null, eventPlay: null, inProfile: null, checkpointId: null}));
 
   let content = null;
   let backAction = null;
@@ -33,7 +35,9 @@ export const MainLayout = () => {
     );
   } else if (eventPlay) {
     content = (
-      <EventPlayScreen />
+      <EventPlayState>
+        <EventPlayScreen />
+      </EventPlayState>
     );
     backAction = () => (changeScreen({eventPlay: null}));
   } else {

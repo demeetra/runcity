@@ -4,7 +4,15 @@ import { screenReducer } from './screenReducer'
 import { CHANGE_SCREEN } from '../types'
 
 export const ScreenState = ({ children }) => {
-  const [state, dispatch] = useReducer(screenReducer, {eventId: null, eventPlay: null, inProfile: null})
+  const [state, dispatch] = useReducer(
+    screenReducer,
+    {
+      eventId: null,
+      eventPlay: null,
+      inProfile: null,
+      checkpointId: null,
+    }
+  )
 
   const changeScreen = payload => dispatch({ type: CHANGE_SCREEN, payload })
 
@@ -15,6 +23,7 @@ export const ScreenState = ({ children }) => {
         eventId: state.eventId,
         eventPlay: state.eventPlay,
         inProfile: state.inProfile,
+        checkpointId: state.checkpointId,
       }}
     >
       {children}

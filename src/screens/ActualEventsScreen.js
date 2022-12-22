@@ -49,9 +49,12 @@ export const ActualEventsScreen = () => {
           keyExtractor={({ id }) => id}
           renderItem={({ item }) => (
             <View>
-              <Text style={{textAlign: "center"}}>{item.title}</Text>
               <TouchableOpacity onPress={() => (changeScreen({eventId: item.id}))}>
-                <Image source={{ uri: item.image}} style={{width: deviceWidth, height: 150}} />
+                <View style={styles.eventCardView}>
+                  <Text style={{...styles.eventCardText, fontSize: 16, fontWeight: 'bold'}}>{item.city.toUpperCase()}</Text>
+                  <Text style={{...styles.eventCardText, fontSize: 14}}>{item.title.toUpperCase()}</Text>
+                  <Text style={styles.eventCardText}>{item.date}</Text>
+                </View>
               </TouchableOpacity>
             </View>
           )}
@@ -81,5 +84,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: THEME.DANGER_COLOR,
     paddingBottom: 30
-  }
+  },
+  eventCardView: {
+    minHeight: 80,
+    backgroundColor: '#ef6c26',
+    borderRadius: 5,
+    padding: 10,
+    margin: 10,
+  },
+  eventCardText: {
+    color: 'white',
+    textAlign: 'center',
+  },
 })

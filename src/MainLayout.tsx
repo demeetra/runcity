@@ -51,7 +51,7 @@ export const MainLayout = () => {
 
   return (
     <View style={styles.wrapper}>
-      <Navbar name='Runcity' nameAction={nameAction} backAction={backAction} profileAction={profileAction}/>
+      <Navbar name='Бегущий Город' nameAction={nameAction} backAction={backAction} profileAction={profileAction}/>
       <View style={styles.container}>
       {content}
       </View>

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   eventCardView: {
     minHeight: 80,
-    backgroundColor: '#ef6c26',
+    backgroundColor: '#007B66',
     borderRadius: 5,
     padding: 10,
     margin: 10,

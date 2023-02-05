@@ -1,8 +1,9 @@
 import React, { type PropsWithChildren } from 'react';
+import { Provider } from 'react-redux';
 import { SafeAreaView, StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import { ActualEventsState } from './src/context/actual_events/ActualEventsState';
-import { ScreenState } from './src/context/screen/ScreenState';
 import { MainLayout } from './src/MainLayout';
+import { store } from './src/store/store';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -12,12 +13,12 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={barStyle} backgroundColor={backgroundStyle.backgroundColor} />
-      <ScreenState>
+    <Provider store={store}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar barStyle={barStyle} backgroundColor={backgroundStyle.backgroundColor} />
           <MainLayout />
-      </ScreenState>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Provider>
   );
 };
 

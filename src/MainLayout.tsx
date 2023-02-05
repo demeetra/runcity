@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navbar } from './components/Navbar';
 import { THEME } from './theme';
 import { ActualEventsScreen } from './screens/ActualEventsScreen';
@@ -9,15 +10,15 @@ import { ProfileScreen } from './screens/ProfileScreen';
 import { ActualEventsState } from './context/actual_events/ActualEventsState';
 import { EventInfoState } from './context/event_info/EventInfoState';
 import { EventPlayState } from './context/event_play/EventPlayState';
-import { ScreenContext } from './context/screen/screenContext';
 
+import { changeScreen } from './store/ScreenAction';
 
 export const MainLayout = () => {
-  const { eventId, eventPlay, inProfile, changeScreen } = useContext(ScreenContext);
+  const { eventId, eventPlay, inProfile } = useSelector(state => state.screenReducer);
+  const dispatch = useDispatch();
 
-
-  const profileAction = () => (changeScreen({inProfile: true}));
-  const nameAction = () => (changeScreen({eventId: null, eventPlay: null, inProfile: null, checkpointId: null}));
+  const profileAction = () => dispatch(changeScreen({inProfile: true}));
+  const nameAction = () => dispatch(changeScreen({eventId: null, eventPlay: null, inProfile: null, checkpointId: null}));
 
   let content = null;
   let backAction = null;
@@ -26,7 +27,7 @@ export const MainLayout = () => {
     content = (
       <ProfileScreen />
     );
-    backAction = () => (changeScreen({inProfile: null}));
+    backAction = () => dispatch(changeScreen({inProfile: null}));
   } else if (eventId == null) {
     content = (
       <ActualEventsState>
@@ -39,14 +40,14 @@ export const MainLayout = () => {
         <EventPlayScreen />
       </EventPlayState>
     );
-    backAction = () => (changeScreen({eventPlay: null}));
+    backAction = () => dispatch(changeScreen({eventPlay: null}));
   } else {
     content = (
       <EventInfoState>
         <EventInfoScreen />
       </EventInfoState>
     );
-    backAction = () => (changeScreen({eventId: null}));
+    backAction = () => dispatch(changeScreen({eventId: null}));
   }
 
   return (

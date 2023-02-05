@@ -1,15 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { THEME } from '../theme'
 import { AppLoader } from '../components/ui/AppLoader'
 import { AppButton } from '../components/ui/AppButton'
 import { AppText } from '../components/ui/AppText'
 import { ActualEventsContext } from '../context/actual_events/ActualEventsContext'
-import { ScreenContext } from '../context/screen/screenContext'
+import { changeScreen } from '../store/ScreenAction';
 
 export const ActualEventsScreen = () => {
   const { actualEvents, fetchActualEvents, loading, error } = useContext(ActualEventsContext)
-  const { changeScreen } = useContext(ScreenContext)
+  const dispatch = useDispatch();
 
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
@@ -49,7 +50,7 @@ export const ActualEventsScreen = () => {
           keyExtractor={({ id }) => id}
           renderItem={({ item }) => (
             <View>
-              <TouchableOpacity onPress={() => (changeScreen({eventId: item.id}))}>
+              <TouchableOpacity onPress={() => dispatch(changeScreen({eventId: item.id}))}>
                 <View style={styles.eventCardView}>
                   <Text style={{...styles.eventCardText, fontSize: 16, fontWeight: 'bold'}}>{item.city.toUpperCase()}</Text>
                   <Text style={{...styles.eventCardText, fontSize: 14}}>{item.title.toUpperCase()}</Text>

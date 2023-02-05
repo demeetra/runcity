@@ -1,10 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Dimensions, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { THEME } from '../theme'
 import { AppButton } from '../components/ui/AppButton'
 import { AppLoader } from '../components/ui/AppLoader'
-import { ScreenContext } from '../context/screen/screenContext'
 import { EventPlayContext } from '../context/event_play/EventPlayContext'
+import { changeScreen } from '../store/ScreenAction';
 
 function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAddr, setTextAddr, textAnsw, setTextAnsw) {
   if (cpinfo == null)
@@ -48,10 +49,12 @@ function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAd
 };
 
 export const EventPlayScreen = () => {
-  const { eventId, checkpointId, changeScreen } = useContext(ScreenContext)
+  const { eventId, checkpointId } = useSelector(state => state.screenReducer);
   const { titles, checkpoints, fetchTitlesEventPlay, fetchCheckpointEventPlay, updateCheckpointEventPlay, loading, error } = useContext(EventPlayContext)
   const [textAddr, setTextAddr] = useState({});
   const [textAnsw, setTextAnsw] = useState({});
+
+  const dispatch = useDispatch();
 
   /*useEffect(() => {
     if (titles != null) {
@@ -74,7 +77,7 @@ export const EventPlayScreen = () => {
     keyExtractor={({ id }) => id}
     renderItem={({ item }) => (
       <View>
-        <AppButton onPress={() => changeScreen({checkpointId: item.id})}>{item.title}</AppButton>
+        <AppButton onPress={() => dispatch(changeScreen({checkpointId: item.id}))}>{item.title}</AppButton>
       </View>
     )}
   />);

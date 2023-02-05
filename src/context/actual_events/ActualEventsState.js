@@ -9,7 +9,6 @@ import {
   ACTUAL_EVENTS_SHOW_LOADER,
   ACTUAL_EVENTS_HIDE_LOADER,
 } from '../types'
-import { ScreenContext } from '../screen/screenContext'
 
 const ip_address = Platform.OS === 'android' ? 'http://10.0.2.2:3000/' : 'http://localhost:3000/'
 
@@ -20,7 +19,6 @@ export const ActualEventsState = ({ children }) => {
     error: null,
   }
 
-  const { changeScreen } = useContext(ScreenContext)
   const [state, dispatch] = useReducer(ActualEventsReducer, initialState)
 
   const clearError = () => dispatch({ type: ACTUAL_EVENTS_CLEAR_ERROR })

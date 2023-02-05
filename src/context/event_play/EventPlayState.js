@@ -10,7 +10,6 @@ import {
   EVENT_PLAY_SHOW_LOADER,
   EVENT_PLAY_HIDE_LOADER,
 } from '../types'
-import { ScreenContext } from '../screen/screenContext'
 
 const ip_address = Platform.OS === 'android' ? 'http://10.0.2.2:3000/' : 'http://localhost:3000/'
 
@@ -22,7 +21,6 @@ export const EventPlayState = ({ children }) => {
     error: null,
   }
 
-  const { changeScreen } = useContext(ScreenContext)
   const [state, dispatch] = useReducer(EventPlayReducer, initialState)
 
   const clearError = () => dispatch({ type: EVENT_PLAY_CLEAR_ERROR })

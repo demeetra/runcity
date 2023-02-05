@@ -1,7 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 import { SafeAreaView, StatusBar, StyleSheet, useColorScheme } from 'react-native';
-import { ActualEventsState } from './src/context/actual_events/ActualEventsState';
 import { MainLayout } from './src/MainLayout';
 import { store } from './src/store/store';
 

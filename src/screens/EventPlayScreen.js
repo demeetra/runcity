@@ -4,8 +4,8 @@ import { Dimensions, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpac
 import { THEME } from '../theme'
 import { AppButton } from '../components/ui/AppButton'
 import { AppLoader } from '../components/ui/AppLoader'
-import { EventPlayContext } from '../context/event_play/EventPlayContext'
 import { changeScreen } from '../store/ScreenAction';
+import { fetchTitlesEventPlay, fetchCheckpointEventPlay, updateCheckpointEventPlay } from '../store/EventPlayAction';
 
 function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAddr, setTextAddr, textAnsw, setTextAnsw) {
   if (cpinfo == null)
@@ -50,7 +50,7 @@ function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAd
 
 export const EventPlayScreen = () => {
   const { eventId, checkpointId } = useSelector(state => state.screenReducer);
-  const { titles, checkpoints, fetchTitlesEventPlay, fetchCheckpointEventPlay, updateCheckpointEventPlay, loading, error } = useContext(EventPlayContext)
+  const { titles, checkpoints, loading, error } = useSelector(state => state.eventPlayReducer);
   const [textAddr, setTextAddr] = useState({});
   const [textAnsw, setTextAnsw] = useState({});
 
@@ -66,9 +66,9 @@ export const EventPlayScreen = () => {
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   )
 
-  const loadTitlesEventPlay = useCallback( async () => await fetchTitlesEventPlay(eventId), [eventId, fetchTitlesEventPlay] )
+  const loadTitlesEventPlay = useCallback( async () => dispatch(await fetchTitlesEventPlay(eventId)), [eventId, fetchTitlesEventPlay] );
   useEffect( () => { loadTitlesEventPlay() }, [] )
-  const loadCheckpointEventPlay = useCallback( async () => await fetchCheckpointEventPlay(checkpointId), [checkpointId, fetchCheckpointEventPlay])
+  const loadCheckpointEventPlay = useCallback( async () => dispatch(await fetchCheckpointEventPlay(checkpointId)), [checkpointId, fetchCheckpointEventPlay])
   useEffect( () => { loadCheckpointEventPlay() }, [checkpointId] )
 
   const checkpointsView = (<FlatList
@@ -82,7 +82,7 @@ export const EventPlayScreen = () => {
     )}
   />);
 
-  const checkpointInfo = checkpointId == null ? null : formatCheckpoint(checkpoints[checkpointId], deviceWidth, updateCheckpointEventPlay, textAddr, setTextAddr, textAnsw, setTextAnsw);
+  const checkpointInfo = checkpointId == null ? null : formatCheckpoint(checkpoints[checkpointId], deviceWidth, (...args) => dispatch(updateCheckpointEventPlay(...args)), textAddr, setTextAddr, textAnsw, setTextAnsw);
 
   if (loading) {
     return <AppLoader />

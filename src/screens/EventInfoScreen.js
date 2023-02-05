@@ -5,20 +5,21 @@ import { THEME } from '../theme'
 import { AppLoader } from '../components/ui/AppLoader'
 import { AppButton } from '../components/ui/AppButton'
 import { AppText } from '../components/ui/AppText'
-import { EventInfoContext } from '../context/event_info/EventInfoContext'
 import { changeScreen } from '../store/ScreenAction';
+import { fetchEventInfo } from '../store/EventInfoAction';
 
 export const EventInfoScreen = () => {
-  const dispatch = useDispatch();
   const { eventId } = useSelector(state => state.screenReducer);
-  const { eventInfo, fetchEventInfo, loading, error } = useContext(EventInfoContext)
+  const { eventInfo, loading, error } = useSelector(state => state.eventInfoReducer);
 
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   )
 
-  const loadEventInfo = useCallback( async () => await fetchEventInfo(eventId), [eventId, fetchEventInfo] )
-  useEffect( () => { loadEventInfo() }, [] )
+  const dispatch = useDispatch();
+
+  const loadEventInfo = () => dispatch(fetchEventInfo(eventId));
+  useEffect( () => { loadEventInfo(); }, [] );
 
   if (loading) {
     return <AppLoader />

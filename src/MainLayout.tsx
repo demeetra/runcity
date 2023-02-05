@@ -7,9 +7,6 @@ import { ActualEventsScreen } from './screens/ActualEventsScreen';
 import { EventInfoScreen } from './screens/EventInfoScreen';
 import { EventPlayScreen } from './screens/EventPlayScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
-import { ActualEventsState } from './context/actual_events/ActualEventsState';
-import { EventInfoState } from './context/event_info/EventInfoState';
-import { EventPlayState } from './context/event_play/EventPlayState';
 
 import { changeScreen } from './store/ScreenAction';
 
@@ -24,29 +21,15 @@ export const MainLayout = () => {
   let backAction = null;
 
   if (inProfile) {
-    content = (
-      <ProfileScreen />
-    );
+    content = (<ProfileScreen />);
     backAction = () => dispatch(changeScreen({inProfile: null}));
   } else if (eventId == null) {
-    content = (
-      <ActualEventsState>
-        <ActualEventsScreen />
-      </ActualEventsState>
-    );
+    content = (<ActualEventsScreen />);
   } else if (eventPlay) {
-    content = (
-      <EventPlayState>
-        <EventPlayScreen />
-      </EventPlayState>
-    );
+    content = (<EventPlayScreen />);
     backAction = () => dispatch(changeScreen({eventPlay: null}));
   } else {
-    content = (
-      <EventInfoState>
-        <EventInfoScreen />
-      </EventInfoState>
-    );
+    content = (<EventInfoScreen />);
     backAction = () => dispatch(changeScreen({eventId: null}));
   }
 

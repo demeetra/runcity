@@ -5,19 +5,19 @@ import { THEME } from '../theme'
 import { AppLoader } from '../components/ui/AppLoader'
 import { AppButton } from '../components/ui/AppButton'
 import { AppText } from '../components/ui/AppText'
-import { ActualEventsContext } from '../context/actual_events/ActualEventsContext'
 import { changeScreen } from '../store/ScreenAction';
+import { fetchActualEvents } from '../store/ActualEventsAction';
 
 export const ActualEventsScreen = () => {
-  const { actualEvents, fetchActualEvents, loading, error } = useContext(ActualEventsContext)
-  const dispatch = useDispatch();
-
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
   )
 
-  const loadActualEvents = useCallback( async () => await fetchActualEvents(), [fetchActualEvents] )
-  useEffect( () => { loadActualEvents() }, [] )
+  const { actualEvents, loading, error } = useSelector(state => state.actualEventsReducer);
+  const dispatch = useDispatch();
+
+  const loadActualEvents = () => dispatch(fetchActualEvents());
+  useEffect(() => {loadActualEvents();}, []);
 
   if (loading) {
     return <AppLoader />

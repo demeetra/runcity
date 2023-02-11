@@ -13,6 +13,8 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'App.web.tsx'), // Change this to your main App file
     path.resolve(appDirectory, 'src'),
     //path.resolve(appDirectory, 'node_modules/react-native-uncompiled'),
+    path.resolve(appDirectory, 'node_modules/react-native-login-screen'),
+    path.resolve(appDirectory, 'node_modules/react-native-text-input-interactive'),
   ],
   use: {
     loader: 'babel-loader',

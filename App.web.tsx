@@ -5,15 +5,20 @@ import {
   Text,
   View
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { MainLayout } from './src/MainLayout';
+import { store } from './src/store/store';
+
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <StatusBar barStyle='dark-content' />
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 24}}>React Native Web App Example</Text>
-      </View>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <StatusBar barStyle='dark-content' />
+        <MainLayout />
+      </SafeAreaView>
+    </Provider>
   );
 };
+
 export default App;

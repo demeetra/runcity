@@ -9,13 +9,14 @@ const App = () => {
   const barStyle = isDarkMode ? 'light-content' : 'dark-content';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? '#222' : '#F3F3F3',
+    flex: 1,
   };
 
   return (
     <Provider store={store}>
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={barStyle} backgroundColor={backgroundStyle.backgroundColor} />
-          <MainLayout />
+        <MainLayout />
       </SafeAreaView>
     </Provider>
   );

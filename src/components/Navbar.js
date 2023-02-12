@@ -4,7 +4,7 @@ import { THEME } from '../theme'
 import { AppButton } from './ui/AppButton'
 import { AppTextBold } from './ui/AppTextBold'
 
-export const Navbar = ({ name, nameAction, backAction, profileAction }) => {
+export const Navbar = ({ name, nameAction, backAction, profileAction, profileName }) => {
   return (
     <View
       style={{
@@ -18,7 +18,7 @@ export const Navbar = ({ name, nameAction, backAction, profileAction }) => {
       <AppButton onPress={backAction} opacity={backAction == null ? 0 : 1}>Back</AppButton>
       {/*<AppTextBold style={styles.text}>{name}</AppTextBold>*/}
       <AppButton onPress={nameAction}>{name}</AppButton>
-      <AppButton onPress={profileAction}>Profile</AppButton>
+      <AppButton onPress={profileAction}>{profileName}</AppButton>
     </View>
   )
 }

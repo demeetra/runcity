@@ -1,6 +1,7 @@
 import { SCREEN_CHANGE } from './constants';
 
 const initialState = {
+  isSignedIn: false,
   eventId: null,
   eventPlay: null,
   inProfile: null,

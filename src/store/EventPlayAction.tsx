@@ -9,11 +9,10 @@ import {
   EVENT_PLAY_HIDE_LOADER,
 } from './constants';
 
-const ip_address = Platform.OS === 'android' ? 'http://10.0.2.2:3000/' : 'http://localhost:3000/';
-
+const ip_address = 'https://www.public.runcitytest.org';
 
 export const fetchTitlesEventPlay = (eventId) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     if (!eventId)
       return;
     const clearError = () => dispatch({ type: EVENT_PLAY_CLEAR_ERROR });
@@ -23,11 +22,16 @@ export const fetchTitlesEventPlay = (eventId) => {
     const func = async () => {
       showLoader()
       clearError()
-      const apiUrl = ip_address + 'api/v1/checkpoints?event_id=' + eventId;
+      const apiUrl = ip_address + '/ru/api_json/?handler=checkpoints&id=' + eventId;
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getState().userReducer.token,
+      };
       try {
-        const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
+        const response = await fetch(apiUrl, {method: 'GET', headers})
         const json = await response.json()
-        dispatch( { type: EVENT_PLAY_FETCH_TITLES, titles: json } )
+        const titles = Object.keys(json.data).map(key => json.data[key]).sort((l, r) => { return Number(l.sort_order) - Number(r.sort_order); });
+        dispatch( { type: EVENT_PLAY_FETCH_TITLES, titles } )
       } catch (exc) {
           showError('Something went wrong...')
           console.log(exc)
@@ -40,7 +44,7 @@ export const fetchTitlesEventPlay = (eventId) => {
 }
 
 export const fetchCheckpointEventPlay = (checkpointId) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     if (!checkpointId)
       return;
     const clearError = () => dispatch({ type: EVENT_PLAY_CLEAR_ERROR });
@@ -50,11 +54,15 @@ export const fetchCheckpointEventPlay = (checkpointId) => {
     const func = async () => {
       showLoader()
       clearError()
-      const apiUrl = ip_address + 'api/v1/checkpoints/' + checkpointId;
+      const apiUrl = ip_address + '/ru/api_json/?handler=checkpoint&cp_id=' + checkpointId;
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getState().userReducer.token,
+      };
       try {
-        const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }})
+        const response = await fetch(apiUrl, {method: 'GET', headers})
         const json = await response.json()
-        const update = { [checkpointId]: json }
+        const update = { [checkpointId]: json.data }
         dispatch( { type: EVENT_PLAY_FETCH_CHECKPOINT, checkpoints: update } )
       } catch (exc) {
           showError('Something went wrong...')

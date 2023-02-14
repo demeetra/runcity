@@ -35,12 +35,11 @@ export const EventInfoScreen = () => {
   }
   return (
     <View style={{ width: deviceWidth }}>
-      <Text style={{textAlign: "center"}}>{eventInfo.title}</Text>
+      <Text style={{textAlign: "center"}}>{eventInfo.name}</Text>
       <Text></Text>
       <AppButton onPress={() => dispatch(changeScreen({eventPlay: true}))}>Start</AppButton>
       <Text></Text>
-      <Image source={{ uri: eventInfo.image}} style={{width: deviceWidth, height: 150}} />
-      <Text>{eventInfo.description}</Text>
+      <Image source={{ uri: eventInfo.online_img2_uri}} style={{width: deviceWidth, height: 150}} />
     </View>
   )
 }

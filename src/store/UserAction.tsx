@@ -11,28 +11,22 @@ const ip_address = 'https://www.public.runcitytest.org';
 
 export const userSignIn = (email, password) => {
   const apiUrl = ip_address + '/ru/people/login_json/'
-  const body = new URLSearchParams({
-    email,
-    pass: password,
-    action: 'login',
-  }).toString();
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  };
+  const body = new URLSearchParams({email, pass: password, action: 'login'}).toString();
+  const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   return async dispatch => {
-    dispatch({ type: USER_CLEAR_ERROR });
+    dispatch({type: USER_CLEAR_ERROR});
     try {
       const json = await (await fetch(apiUrl, {method: 'POST', headers, body})).json();
-      if (!json.ok) {
+      if (!json.status) {
         console.log('Bad reply', json);
-        dispatch({ type: USER_SHOW_ERROR, error: json.reason});
+        dispatch({type: USER_SHOW_ERROR, error: json.error});
       } else {
-        dispatch( { type: USER_SIGNIN, data: json.data } );
+        dispatch({type: USER_SIGNIN, update: {user: json.data.user, token: json.data.token}});
         dispatch(changeScreen({isSignedIn: true}));
       }
     } catch (exc) {
         console.log(exc);
-        dispatch({ type: USER_SHOW_ERROR, error: exc});
+        dispatch({type: USER_SHOW_ERROR, error: exc});
     }
   }
 };

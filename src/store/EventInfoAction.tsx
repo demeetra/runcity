@@ -8,7 +8,9 @@ import {
   EVENT_INFO_HIDE_LOADER,
 } from './constants';
 
-const ip_address = Platform.OS === 'android' ? 'http://10.0.2.2:3000/' : 'http://localhost:3000/';
+//const ip_address = Platform.OS === 'android' ? 'http://10.0.2.2:3000/' : 'http://localhost:3000/';
+const ip_address = 'https://www.public.runcitytest.org';
+
 
 export const fetchEventInfo = (eventId) => {
   return async dispatch => {
@@ -19,11 +21,16 @@ export const fetchEventInfo = (eventId) => {
     const fetchEventInfo = async () => {
       showLoader();
       clearError();
-      const apiUrl = ip_address + 'api/v1/events/' + eventId;
+      const apiUrl = ip_address + '/ru/api_json/?handler=event&id=' + eventId;
       try {
         const response = await fetch(apiUrl, {method: 'GET', headers: { 'Content-Type': 'application/json' }});
         const json = await response.json();
-        dispatch( { type: EVENT_INFO_FETCH, eventInfo: json } );
+        if (!json.status) {
+          console.log('Bad reply', json);
+          showError(json.error);
+        } else {
+          dispatch( { type: EVENT_INFO_FETCH, eventInfo: json.data } )
+        }
       } catch (exc) {
           showError('Something went wrong...');
           console.log(exc);

@@ -11,12 +11,12 @@ function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAd
   if (cpinfo == null)
     return;
   if (!(cpinfo.id in textAddr)) {
-    setTextAddr({...textAddr, [cpinfo.id]: cpinfo.address})
+    setTextAddr({...textAddr, [cpinfo.id]: cpinfo.legend_address})
   }
   if (!(cpinfo.id in textAnsw)) {
     setTextAnsw({...textAnsw, [cpinfo.id]: cpinfo.answer})
   }
-  const addressInput = cpinfo.is_riddle && (
+  const addressInput = cpinfo.is_puzzle != '0' && (
     <View>
       <Text>Адрес:</Text>
       <TextInput
@@ -33,8 +33,8 @@ function formatCheckpoint(cpinfo, deviceWidth, updateCheckpointEventPlay, textAd
   return (
     <View>
       <Text>{cpinfo.title}</Text>
-      <Text>{cpinfo.is_riddle ? 'Загадка' : cpinfo.address}</Text>
-      <Text>{cpinfo.text}</Text>
+      <Text>{cpinfo.is_puzzle != '0' ? 'Загадка' : cpinfo.legend_address}</Text>
+      <Text>{cpinfo.legend_quest}</Text>
       {imageElement}
       {addressInput}
       <Text>Ответ:</Text>
@@ -77,7 +77,7 @@ export const EventPlayScreen = () => {
     keyExtractor={({ id }) => id}
     renderItem={({ item }) => (
       <View>
-        <AppButton onPress={() => dispatch(changeScreen({checkpointId: item.id}))}>{item.title}</AppButton>
+        <AppButton onPress={() => dispatch(changeScreen({checkpointId: item.cp_id}))}>{item.sort_order}</AppButton>
       </View>
     )}
   />);

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   user: null,
-  cookies: {},
+  token: null,
   error: null,
 };
 
@@ -16,11 +16,11 @@ const userReducer = (state = initialState, action) => {
     case USER_LOGOUT:
       return { ...initialState };
     case USER_SIGNIN:
-      return { ...state, ...action.data };
+      return { ...state, ...action.update };
     case USER_CLEAR_ERROR:
       return { ...state, error: null };
     case USER_SHOW_ERROR:
-      return { ...state, error:action.error };
+      return { ...state, error: action.error };
     default:
       return state;
   }

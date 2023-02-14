@@ -52,9 +52,9 @@ export const ActualEventsScreen = () => {
             <View>
               <TouchableOpacity onPress={() => dispatch(changeScreen({eventId: item.id}))}>
                 <View style={styles.eventCardView}>
-                  <Text style={{...styles.eventCardText, fontSize: 16, fontWeight: 'bold'}}>{item.city.toUpperCase()}</Text>
-                  <Text style={{...styles.eventCardText, fontSize: 14}}>{item.title.toUpperCase()}</Text>
-                  <Text style={styles.eventCardText}>{item.date}</Text>
+                  <Text style={{...styles.eventCardText, fontSize: 16, fontWeight: 'bold'}}>{item.place.toUpperCase()}</Text>
+                  <Text style={{...styles.eventCardText, fontSize: 14}}>{item.name.toUpperCase()}</Text>
+                  <Text style={styles.eventCardText}>{new Date(Number(item.date_start * 1000)).toLocaleDateString('ru-ru')}</Text>
                 </View>
               </TouchableOpacity>
             </View>

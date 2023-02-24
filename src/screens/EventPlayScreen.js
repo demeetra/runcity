@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   Dimensions,
@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {THEME} from '../theme';
 import {AppButton} from '../components/ui/AppButton';
 import {AppLoader} from '../components/ui/AppLoader';
+import {AppText} from '../components/ui/AppText';
 import {changeScreen} from '../store/ScreenAction';
 import {
   fetchTitlesEventPlay,
@@ -23,7 +23,7 @@ import {
 function formatCheckpoint(
   cpinfo,
   deviceWidth,
-  updateCheckpointEventPlay,
+  doUpdateCheckpointEventPlay,
   textAddr,
   setTextAddr,
   textAnsw,
@@ -38,7 +38,7 @@ function formatCheckpoint(
   if (!(cpinfo.id in textAnsw)) {
     setTextAnsw({...textAnsw, [cpinfo.id]: cpinfo.answer});
   }
-  const addressInput = cpinfo.is_puzzle != '0' && (
+  const addressInput = cpinfo.is_puzzle !== '0' && (
     <View>
       <Text>Адрес:</Text>
       <TextInput
@@ -47,7 +47,7 @@ function formatCheckpoint(
           setTextAddr({...textAddr, [cpinfo.id]: newText})
         }
         onEndEditing={() =>
-          updateCheckpointEventPlay(cpinfo.id, {answer: textAddr[cpinfo.id]})
+          doUpdateCheckpointEventPlay(cpinfo.id, {answer: textAddr[cpinfo.id]})
         }
         defaultValue={textAddr[cpinfo.id]}
       />
@@ -56,13 +56,16 @@ function formatCheckpoint(
   const imageElement = cpinfo.image && (
     <Image
       source={{uri: cpinfo.image}}
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{width: deviceWidth, height: 150}}
     />
   );
   return (
     <View>
       <Text>{cpinfo.title}</Text>
-      <Text>{cpinfo.is_puzzle != '0' ? 'Загадка' : cpinfo.legend_address}</Text>
+      <Text>
+        {cpinfo.is_puzzle !== '0' ? 'Загадка' : cpinfo.legend_address}
+      </Text>
       <Text>{cpinfo.legend_quest}</Text>
       {imageElement}
       {addressInput}
@@ -73,7 +76,7 @@ function formatCheckpoint(
           setTextAnsw({...textAnsw, [cpinfo.id]: newText})
         }
         onEndEditing={() =>
-          updateCheckpointEventPlay(cpinfo.id, {answer: textAnsw[cpinfo.id]})
+          doUpdateCheckpointEventPlay(cpinfo.id, {answer: textAnsw[cpinfo.id]})
         }
         defaultValue={textAnsw[cpinfo.id]}
       />
@@ -97,24 +100,24 @@ export const EventPlayScreen = () => {
     }
   }, [titles]);*/
 
-  const [deviceWidth, setDeviceWidth] = useState(
+  const [deviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
 
   const loadTitlesEventPlay = useCallback(
     async () => dispatch(await fetchTitlesEventPlay(eventId)),
-    [eventId, fetchTitlesEventPlay],
+    [dispatch, eventId],
   );
   useEffect(() => {
     loadTitlesEventPlay();
-  }, []);
+  }, [loadTitlesEventPlay]);
   const loadCheckpointEventPlay = useCallback(
     async () => dispatch(await fetchCheckpointEventPlay(checkpointId)),
-    [checkpointId, fetchCheckpointEventPlay],
+    [dispatch, checkpointId],
   );
   useEffect(() => {
     loadCheckpointEventPlay();
-  }, [checkpointId]);
+  }, [loadCheckpointEventPlay]);
 
   const checkpointsView = (
     <FlatList
@@ -160,7 +163,7 @@ export const EventPlayScreen = () => {
 
   return (
     <View style={{width: deviceWidth}}>
-      <Text style={{textAlign: 'center'}}>EventPlay</Text>
+      <Text style={styles.eventText}>EventPlay</Text>
       {checkpointsView}
       <Text />
       {checkpointInfo}
@@ -184,5 +187,8 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  eventText: {
+    textAlign: 'center',
   },
 });

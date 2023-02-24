@@ -1,4 +1,4 @@
-import React, {type PropsWithChildren} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {
   SafeAreaView,
@@ -10,19 +10,13 @@ import {MainLayout} from './src/MainLayout';
 import {store} from './src/store/store';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const barStyle = isDarkMode ? 'light-content' : 'dark-content';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#222' : '#F3F3F3',
-    flex: 1,
-  };
-
+  const styles = useColorScheme() === 'dark' ? stylesDark : stylesLight;
   return (
     <Provider store={store}>
-      <SafeAreaView style={backgroundStyle}>
+      <SafeAreaView style={styles.backgroundStyle}>
         <StatusBar
-          barStyle={barStyle}
-          backgroundColor={backgroundStyle.backgroundColor}
+          barStyle={styles.barStyle}
+          backgroundColor={styles.backgroundStyle.backgroundColor}
         />
         <MainLayout />
       </SafeAreaView>
@@ -30,9 +24,25 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  highlight: {
-    fontWeight: '700',
+const stylesCommon = {
+  backgroundStyle: {
+    flex: 1,
+  },
+};
+
+const stylesLight = StyleSheet.create({
+  barStyle: 'light-content',
+  backgroundStyle: {
+    ...stylesCommon.backgroundStyle,
+    backgroundColor: '#F3F3F3',
+  },
+});
+
+const stylesDark = StyleSheet.create({
+  barStyle: 'dark-content',
+  backgroundStyle: {
+    ...stylesCommon.backgroundStyle,
+    backgroundColor: '#222',
   },
 });
 

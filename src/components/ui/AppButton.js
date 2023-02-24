@@ -16,6 +16,7 @@ export const AppButton = props => {
   return (
     <Wrapper onPress={props.onPress} activeOpacity={0.7}>
       <View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...styles.button,
           backgroundColor: props.color || THEME.MAIN_COLOR,

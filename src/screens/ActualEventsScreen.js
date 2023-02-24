@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   Dimensions,
@@ -17,7 +17,7 @@ import {changeScreen} from '../store/ScreenAction';
 import {fetchActualEvents} from '../store/ActualEventsAction';
 
 export const ActualEventsScreen = () => {
-  const [deviceWidth, setDeviceWidth] = useState(
+  const [deviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
 
@@ -26,10 +26,13 @@ export const ActualEventsScreen = () => {
   );
   const dispatch = useDispatch();
 
-  const loadActualEvents = () => dispatch(fetchActualEvents());
+  const loadActualEvents = useCallback(
+    () => dispatch(fetchActualEvents()),
+    [dispatch],
+  );
   useEffect(() => {
     loadActualEvents();
-  }, []);
+  }, [loadActualEvents]);
 
   if (loading) {
     return <AppLoader />;
@@ -65,15 +68,10 @@ export const ActualEventsScreen = () => {
             <TouchableOpacity
               onPress={() => dispatch(changeScreen({eventId: item.id}))}>
               <View style={styles.eventCardView}>
-                <Text
-                  style={{
-                    ...styles.eventCardText,
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                  }}>
+                <Text style={styles.eventCardPlace}>
                   {item.place.toUpperCase()}
                 </Text>
-                <Text style={{...styles.eventCardText, fontSize: 14}}>
+                <Text style={styles.eventCardName}>
                   {item.name.toUpperCase()}
                 </Text>
                 <Text style={styles.eventCardText}>
@@ -118,6 +116,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     margin: 10,
+  },
+  eventCardPlace: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  eventCardName: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 14,
   },
   eventCardText: {
     color: 'white',

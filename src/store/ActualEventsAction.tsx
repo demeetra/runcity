@@ -1,5 +1,3 @@
-import React, {useReducer, useContext} from 'react';
-import {Alert, Platform} from 'react-native';
 import {
   ACTUAL_EVENTS_FETCH,
   ACTUAL_EVENTS_CLEAR_ERROR,
@@ -18,7 +16,7 @@ export const fetchActualEvents = () => {
       dispatch({type: ACTUAL_EVENTS_SHOW_ERROR, error});
     const showLoader = () => dispatch({type: ACTUAL_EVENTS_SHOW_LOADER});
     const hideLoader = () => dispatch({type: ACTUAL_EVENTS_HIDE_LOADER});
-    const fetchActualEvents = async () => {
+    const wrapper = async () => {
       showLoader();
       clearError();
       const apiUrl = ip_address + '/ru/api_json/?handler=events';
@@ -44,6 +42,6 @@ export const fetchActualEvents = () => {
         hideLoader();
       }
     };
-    return await fetchActualEvents();
+    return await wrapper();
   };
 };

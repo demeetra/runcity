@@ -1,5 +1,3 @@
-import React, {useReducer, useContext} from 'react';
-import {Alert, Platform} from 'react-native';
 import {
   EVENT_PLAY_FETCH_TITLES,
   EVENT_PLAY_FETCH_CHECKPOINT,

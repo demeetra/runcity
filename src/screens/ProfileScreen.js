@@ -9,27 +9,20 @@ export const ProfileScreen = () => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.userReducer);
 
-  const [deviceWidth, setDeviceWidth] = useState(
+  const [deviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
 
   return (
     <View style={{width: deviceWidth}}>
-      <Text style={{textAlign: 'center'}}>{JSON.stringify(user, null, 2)}</Text>
+      <Text style={styles.text}>{JSON.stringify(user, null, 2)}</Text>
       <AppButton onPress={() => dispatch(userLogOut())}>LogOut</AppButton>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  error: {
-    fontSize: 20,
-    color: THEME.DANGER_COLOR,
-    paddingBottom: 30,
+  text: {
+    textAlign: 'center',
   },
 });

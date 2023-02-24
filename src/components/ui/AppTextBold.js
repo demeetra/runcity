@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 
 export const AppTextBold = props => (
   <Text style={{...styles.default, ...props.style}}>{props.children}</Text>

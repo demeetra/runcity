@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {Navbar} from './components/Navbar';
@@ -25,7 +25,7 @@ export const MainLayout = () => {
     let userEmail = '';
     let userPassword = '';
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.signIn}>
         {error_xs}
         <LoginScreen
           onLoginPress={() => {
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: 20,
-    //flex: 1
   },
-  wrapper: {
-    //flex: 1
+  wrapper: {},
+  signIn: {
+    flex: 1,
   },
 });

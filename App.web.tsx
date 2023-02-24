@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {MainLayout} from './src/MainLayout';
 import {store} from './src/store/store';

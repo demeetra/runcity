@@ -1,4 +1,3 @@
-import React, {useReducer, useContext} from 'react';
 import {
   USER_LOGOUT,
   USER_SIGNIN,

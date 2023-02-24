@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, {useReducer, useContext} from 'react';
 import {
   USER_LOGOUT,
   USER_SIGNIN,
@@ -10,25 +10,34 @@ import {changeScreen} from './ScreenAction';
 const ip_address = 'https://www.public.runcitytest.org';
 
 export const userSignIn = (email, password) => {
-  const apiUrl = ip_address + '/ru/people/login_json/'
-  const body = new URLSearchParams({email, pass: password, action: 'login'}).toString();
+  const apiUrl = ip_address + '/ru/people/login_json/';
+  const body = new URLSearchParams({
+    email,
+    pass: password,
+    action: 'login',
+  }).toString();
   const headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   return async dispatch => {
     dispatch({type: USER_CLEAR_ERROR});
     try {
-      const json = await (await fetch(apiUrl, {method: 'POST', headers, body})).json();
+      const json = await (
+        await fetch(apiUrl, {method: 'POST', headers, body})
+      ).json();
       if (!json.status) {
         console.log('Bad reply', json);
         dispatch({type: USER_SHOW_ERROR, error: json.error});
       } else {
-        dispatch({type: USER_SIGNIN, update: {user: json.data.user, token: json.data.token}});
+        dispatch({
+          type: USER_SIGNIN,
+          update: {user: json.data.user, token: json.data.token},
+        });
         dispatch(changeScreen({isSignedIn: true}));
       }
     } catch (exc) {
-        console.log(exc);
-        dispatch({type: USER_SHOW_ERROR, error: exc});
+      console.log(exc);
+      dispatch({type: USER_SHOW_ERROR, error: exc});
     }
-  }
+  };
 };
 
 export const userLogOut = () => {

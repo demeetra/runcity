@@ -1,5 +1,5 @@
-import { SCREEN_CHANGE } from './constants';
+import {SCREEN_CHANGE} from './constants';
 
 export function changeScreen(payload) {
-  return { type: SCREEN_CHANGE, payload };
+  return {type: SCREEN_CHANGE, payload};
 }

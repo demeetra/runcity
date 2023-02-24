@@ -13,17 +13,17 @@ const initialState = {
 };
 
 const eventInfoReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case EVENT_INFO_FETCH:
-      return { ...state, eventInfo:action.eventInfo };
+      return {...state, eventInfo: action.eventInfo};
     case EVENT_INFO_SHOW_LOADER:
-      return { ...state, loading: true };
+      return {...state, loading: true};
     case EVENT_INFO_HIDE_LOADER:
-      return { ...state, loading: false };
+      return {...state, loading: false};
     case EVENT_INFO_CLEAR_ERROR:
-      return { ...state, error: null };
+      return {...state, error: null};
     case EVENT_INFO_SHOW_ERROR:
-      return { ...state, error:action.error };
+      return {...state, error: action.error};
     default:
       return state;
   }

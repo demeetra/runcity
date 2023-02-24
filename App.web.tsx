@@ -1,20 +1,14 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  View
-} from 'react-native';
-import { Provider } from 'react-redux';
-import { MainLayout } from './src/MainLayout';
-import { store } from './src/store/store';
-
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {Provider} from 'react-redux';
+import {MainLayout} from './src/MainLayout';
+import {store} from './src/store/store';
 
 const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaView>
-        <StatusBar barStyle='dark-content' />
+        <StatusBar barStyle="dark-content" />
         <MainLayout />
       </SafeAreaView>
     </Provider>

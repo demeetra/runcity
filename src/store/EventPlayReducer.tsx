@@ -15,19 +15,22 @@ const initialState = {
 };
 
 const eventPlayReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case EVENT_PLAY_FETCH_TITLES:
-      return { ...state, titles:action.titles };
+      return {...state, titles: action.titles};
     case EVENT_PLAY_FETCH_CHECKPOINT:
-      return { ...state, checkpoints: {...state.checkpoints, ...action.checkpoints} }
+      return {
+        ...state,
+        checkpoints: {...state.checkpoints, ...action.checkpoints},
+      };
     case EVENT_PLAY_SHOW_LOADER:
-      return { ...state, loading: true };
+      return {...state, loading: true};
     case EVENT_PLAY_HIDE_LOADER:
-      return { ...state, loading: false };
+      return {...state, loading: false};
     case EVENT_PLAY_CLEAR_ERROR:
-      return { ...state, error: null };
+      return {...state, error: null};
     case EVENT_PLAY_SHOW_ERROR:
-      return { ...state, error:action.error };
+      return {...state, error: action.error};
     default:
       return state;
   }

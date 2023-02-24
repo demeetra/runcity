@@ -1,4 +1,4 @@
-import { SCREEN_CHANGE } from './constants';
+import {SCREEN_CHANGE} from './constants';
 
 const initialState = {
   isSignedIn: false,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const screenReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case SCREEN_CHANGE:
       return {...state, ...action.payload};
     default:

@@ -5,8 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appDirectory = path.resolve(__dirname);
 
 const babelLoaderConfiguration = {
-  //test: /\\\\.ts$|tsx?$/,
-  test: /\.(js|tsx)$/,
+  test: /\.(js|jsx|ts|tsx)$/,
   // Add every directory that needs to be compiled by Babel during the build.
   include: [
     path.resolve(appDirectory, 'index.web.js'), // Entry to your application

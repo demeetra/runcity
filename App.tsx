@@ -6,20 +6,23 @@ import {
   StyleSheet,
   useColorScheme,
 } from 'react-native';
+import {PersistGate} from 'redux-persist/integration/react';
 import {MainLayout} from './src/MainLayout';
-import {store} from './src/store/store';
+import {store, persistor} from './src/store/store';
 
 const App = () => {
   const styles = useColorScheme() === 'dark' ? stylesDark : stylesLight;
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.backgroundStyle}>
-        <StatusBar
-          barStyle={styles.barStyle}
-          backgroundColor={styles.backgroundStyle.backgroundColor}
-        />
-        <MainLayout />
-      </SafeAreaView>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaView style={styles.backgroundStyle}>
+          <StatusBar
+            barStyle={styles.barStyle}
+            backgroundColor={styles.backgroundStyle.backgroundColor}
+          />
+          <MainLayout />
+        </SafeAreaView>
+      </PersistGate>
     </Provider>
   );
 };

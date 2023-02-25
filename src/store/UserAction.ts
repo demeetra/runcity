@@ -4,7 +4,7 @@ import {
   USER_CLEAR_ERROR,
   USER_SHOW_ERROR,
 } from './constants';
-import {changeScreen} from './ScreenAction';
+import {resetScreen} from './ScreenAction';
 
 const ip_address = 'https://www.public.runcitytest.org';
 
@@ -30,7 +30,6 @@ export const userSignIn = (email, password) => {
           type: USER_SIGNIN,
           update: {user: json.data.user, token: json.data.token},
         });
-        dispatch(changeScreen({isSignedIn: true}));
       }
     } catch (exc) {
       console.log(exc);
@@ -42,6 +41,6 @@ export const userSignIn = (email, password) => {
 export const userLogOut = () => {
   return async dispatch => {
     dispatch({type: USER_LOGOUT});
-    dispatch(changeScreen({isSignedIn: false}));
+    dispatch(resetScreen());
   };
 };

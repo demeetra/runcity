@@ -14,12 +14,12 @@ import {userSignIn} from './store/UserAction';
 
 export const MainLayout = () => {
   const dispatch = useDispatch();
-  const {isSignedIn, eventId, eventPlay, inProfile} = useSelector(
+  const {eventId, eventPlay, inProfile} = useSelector(
     state => state.screenReducer,
   );
   const {user, error: userLoginError} = useSelector(state => state.userReducer);
 
-  if (!isSignedIn) {
+  if (!user) {
     var error_xs = userLoginError && <Text>{userLoginError}</Text>;
 
     let userEmail = '';

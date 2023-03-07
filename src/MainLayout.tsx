@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {AppLoader} from './components/ui/AppLoader';
 import {Navbar} from './components/Navbar';
 import {THEME} from './theme';
 import LoginScreen from 'react-native-login-screen';
@@ -14,6 +15,7 @@ import {userSignIn} from './store/UserAction';
 
 export const MainLayout = () => {
   const dispatch = useDispatch();
+  const {loading} = useSelector(state => state.runcityApiReducer);
   const {eventId, eventPlay, inProfile} = useSelector(
     state => state.screenReducer,
   );
@@ -82,6 +84,7 @@ export const MainLayout = () => {
         profileAction={profileAction}
         profileName={profileName}
       />
+      {loading > 0 && <AppLoader />}
       <View style={styles.container}>{content}</View>
     </View>
   );

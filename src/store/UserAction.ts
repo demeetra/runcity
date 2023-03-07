@@ -6,10 +6,9 @@ import {
 } from './constants';
 import {resetScreen} from './ScreenAction';
 
-const ip_address = 'https://www.public.runcitytest.org';
-
 export const userSignIn = (email, password) => {
-  const apiUrl = ip_address + '/ru/people/login_json/';
+  // TODO: use common api
+  const apiUrl = 'https://www.public.runcitytest.org/ru/people/login_json/';
   const body = new URLSearchParams({
     email,
     pass: password,

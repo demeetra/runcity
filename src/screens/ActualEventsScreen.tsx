@@ -10,9 +10,6 @@ import {
   View,
 } from 'react-native';
 import {THEME} from '../theme';
-import {AppLoader} from '../components/ui/AppLoader';
-import {AppButton} from '../components/ui/AppButton';
-import {AppText} from '../components/ui/AppText';
 import {changeScreen} from '../store/ScreenAction';
 import {fetchActualEvents} from '../store/ActualEventsAction';
 
@@ -21,9 +18,7 @@ export const ActualEventsScreen = () => {
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
 
-  const {actualEvents, loading, error} = useSelector(
-    state => state.actualEventsReducer,
-  );
+  const {actualEvents} = useSelector(state => state.actualEventsReducer);
   const dispatch = useDispatch();
 
   const loadActualEvents = useCallback(
@@ -33,19 +28,6 @@ export const ActualEventsScreen = () => {
   useEffect(() => {
     loadActualEvents();
   }, [loadActualEvents]);
-
-  if (loading) {
-    return <AppLoader />;
-  }
-
-  if (error) {
-    return (
-      <View style={styles.center}>
-        <AppText style={styles.error}>{error}</AppText>
-        <AppButton onpress={loadActualEvents}>Repeat</AppButton>
-      </View>
-    );
-  }
 
   if (actualEvents.length === 0) {
     return (
@@ -104,11 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  error: {
-    fontSize: 20,
-    color: THEME.DANGER_COLOR,
-    paddingBottom: 30,
   },
   eventCardView: {
     minHeight: 80,

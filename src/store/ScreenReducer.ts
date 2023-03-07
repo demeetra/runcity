@@ -12,7 +12,6 @@ const screenReducer = (state = initialState, action) => {
     case SCREEN_CHANGE:
       return {...state, ...action.payload};
     case SCREEN_RESET:
-      console.log('trace', {...initialState});
       return {...initialState};
     default:
       return state;

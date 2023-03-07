@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 import {THEME} from '../theme';
 import {AppButton} from '../components/ui/AppButton';
-import {AppLoader} from '../components/ui/AppLoader';
-import {AppText} from '../components/ui/AppText';
 import {changeScreen} from '../store/ScreenAction';
 import {
   fetchTitlesEventPlay,
@@ -86,9 +84,7 @@ function formatCheckpoint(
 
 export const EventPlayScreen = () => {
   const {eventId, checkpointId} = useSelector(state => state.screenReducer);
-  const {titles, checkpoints, loading, error} = useSelector(
-    state => state.eventPlayReducer,
-  );
+  const {titles, checkpoints} = useSelector(state => state.eventPlayReducer);
   const [textAddr, setTextAddr] = useState({});
   const [textAnsw, setTextAnsw] = useState({});
 
@@ -105,14 +101,14 @@ export const EventPlayScreen = () => {
   );
 
   const loadTitlesEventPlay = useCallback(
-    async () => dispatch(await fetchTitlesEventPlay(eventId)),
+    () => dispatch(fetchTitlesEventPlay(eventId)),
     [dispatch, eventId],
   );
   useEffect(() => {
     loadTitlesEventPlay();
   }, [loadTitlesEventPlay]);
   const loadCheckpointEventPlay = useCallback(
-    async () => dispatch(await fetchCheckpointEventPlay(checkpointId)),
+    () => dispatch(fetchCheckpointEventPlay(checkpointId)),
     [dispatch, checkpointId],
   );
   useEffect(() => {
@@ -148,19 +144,6 @@ export const EventPlayScreen = () => {
           setTextAnsw,
         );
 
-  if (loading) {
-    return <AppLoader />;
-  }
-
-  if (error) {
-    return (
-      <View style={styles.center}>
-        <AppText style={styles.error}>{error}</AppText>
-        <AppButton onpress={loadTitlesEventPlay}>Repeat</AppButton>
-      </View>
-    );
-  }
-
   return (
     <View style={{width: deviceWidth}}>
       <Text style={styles.eventText}>EventPlay</Text>
@@ -176,11 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  error: {
-    fontSize: 20,
-    color: THEME.DANGER_COLOR,
-    paddingBottom: 30,
   },
   input: {
     height: 40,

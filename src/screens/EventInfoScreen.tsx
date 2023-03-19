@@ -33,9 +33,16 @@ export const EventInfoScreen = () => {
       </AppButton>
       <Text />
       <Image
-        source={{uri: eventInfo.online_img2_uri}}
+        source={{
+          uri:
+            eventInfo.online_img1_uri &&
+            eventInfo.online_img1_uri.replace(
+              /img.public.runcitytest.org/,
+              'img.runcity.org',
+            ),
+        }}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={{width: deviceWidth, height: 150}}
+        style={{width: deviceWidth, height: 600, resizeMode: 'contain'}}
       />
     </View>
   );

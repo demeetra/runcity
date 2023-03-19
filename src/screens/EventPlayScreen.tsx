@@ -4,9 +4,11 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Linking,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {THEME} from '../theme';
@@ -51,19 +53,43 @@ function formatCheckpoint(
       />
     </View>
   );
-  const imageElement = cpinfo.image && (
-    <Image
-      source={{uri: cpinfo.image}}
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{width: deviceWidth, height: 150}}
+  const imageElement = (
+    <FlatList
+      data={cpinfo.images}
+      keyExtractor={({uri}) => uri}
+      renderItem={({item}) => {
+        const uri = item.uri.replace(
+          /img.public.runcitytest.org/,
+          'img.runcity.org',
+        ); // TODO: fix server
+        if (Number(item.is_image)) {
+          return (
+            <Image
+              source={{uri}}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{width: deviceWidth, height: 200, resizeMode: 'contain'}}
+            />
+          );
+        }
+        if (Number(item.is_audio)) {
+          return (
+            <TouchableOpacity onPress={() => Linking.openURL(uri)}>
+              <Text
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{color: 'blue'}}>
+                (ссылка на аудио)
+              </Text>
+            </TouchableOpacity>
+          );
+        }
+      }}
     />
   );
   return (
     <View>
       <Text>{cpinfo.title}</Text>
-      <Text>
-        {cpinfo.is_puzzle !== '0' ? 'Загадка' : cpinfo.legend_address}
-      </Text>
+      <Text>{cpinfo.legend_address}</Text>
+      <Text>{cpinfo.legend_desc}</Text>
       <Text>{cpinfo.legend_quest}</Text>
       {imageElement}
       {addressInput}

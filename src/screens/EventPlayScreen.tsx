@@ -183,7 +183,7 @@ export const EventPlayScreen = () => {
 
   return (
     <View style={{width: deviceWidth}}>
-      <Text style={styles.eventText}>EventPlay</Text>
+      <Text style={styles.eventText}>Team {onlineState.team.snumber_full}</Text>
       {checkpointsView}
       <Text />
       {checkpointInfo}

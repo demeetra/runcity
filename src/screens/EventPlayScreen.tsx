@@ -19,6 +19,7 @@ import {
   fetchCheckpointEventPlay,
   updateCheckpointEventPlay,
 } from '../store/EventPlayAction';
+import {fetchOnline} from '../store/OnlineAction';
 
 function formatCheckpoint(
   cpinfo,
@@ -110,6 +111,7 @@ function formatCheckpoint(
 
 export const EventPlayScreen = () => {
   const {eventId, checkpointId} = useSelector(state => state.screenReducer);
+  const onlineState = useSelector(state => state.onlineReducer);
   const {titles, checkpoints} = useSelector(state => state.eventPlayReducer);
   const [textAddr, setTextAddr] = useState({});
   const [textAnsw, setTextAnsw] = useState({});
@@ -140,6 +142,15 @@ export const EventPlayScreen = () => {
   useEffect(() => {
     loadCheckpointEventPlay();
   }, [loadCheckpointEventPlay]);
+
+  const loadOnline = useCallback(
+    () => dispatch(fetchOnline(eventId)),
+    [dispatch, eventId],
+  );
+  useEffect(() => {
+    loadOnline();
+  }, [loadOnline]);
+  console.log('onlineState', onlineState);
 
   const checkpointsView = (
     <FlatList

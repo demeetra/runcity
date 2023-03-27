@@ -17,15 +17,16 @@ import {
 } from './constants';
 
 class RuncityApi {
-  private static baseUrl: string =
-    'https://www.public.runcitytest.org/ru/api_json/';
+  private static baseUrl: string = 'https://www.public.runcitytest.org/ru/';
 
   getUrl(handler: string, qargs: Record<string, string> = {}): string {
     const searchParams = new URLSearchParams({
       handler,
+      auth_type: 'token',
       ...qargs,
     });
-    return RuncityApi.baseUrl + '?' + searchParams.toString();
+    const path = handler.startsWith('/') ? handler.substring(1) : 'api_json/';
+    return RuncityApi.baseUrl + path + '?' + searchParams.toString();
   }
 
   GET(

@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import actualEventsReducer from './ActualEventsReducer';
 import eventInfoReducer from './EventInfoReducer';
 import eventPlayReducer from './EventPlayReducer';
+import onlineReducer from './OnlineReducer';
 import screenReducer from './ScreenReducer';
 import {runcityApiReducer} from './runcityApi';
 import userReducer from './UserReducer';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   actualEventsReducer,
   eventInfoReducer,
   eventPlayReducer,
+  onlineReducer,
   screenReducer,
   runcityApiReducer,
   userReducer: persistReducer(userPersistConfig, userReducer),

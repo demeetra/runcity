@@ -50,6 +50,7 @@ export const ActualEventsScreen = () => {
             <TouchableOpacity
               onPress={() => dispatch(changeScreen({eventId: item.id}))}>
               <View style={styles.eventCardView}>
+              <Image style={[styles.image, {height: '100px'}]} source={require('../../assets/test.png')} />
                 <Text style={styles.eventCardPlace}>
                   {item.place.toUpperCase()}
                 </Text>
@@ -88,26 +89,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   eventCardView: {
-    minHeight: 80,
-    backgroundColor: '#007B66',
-    borderRadius: 5,
-    padding: 10,
-    margin: 10,
+    minHeight: 100,
+    backgroundColor: '#FCFCFC',
+    borderRadius: 8,
+    padding: 16,
+    margin: 8,
   },
   eventCardPlace: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
+    color: '#414141',
+    textAlign: 'left',
+    fontSize: 36,
     fontFamily: 'Rubik',
     fontWeight: 'bold',
   },
   eventCardName: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
+    color: '#414141',
+    textAlign: 'left',
+    fontSize: 20,
   },
   eventCardText: {
-    color: 'white',
-    textAlign: 'center',
+    color: '#414141',
+    textAlign: 'left',
+    fontSize: 20,
   },
 });

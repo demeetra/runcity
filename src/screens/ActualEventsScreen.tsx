@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+    fontFamily: 'Rubik',
     fontWeight: 'bold',
   },
   eventCardName: {

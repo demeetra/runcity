@@ -41,6 +41,17 @@ const imageLoaderConfiguration = {
   },
 };
 
+/*const ttfLoaderConfiguration = {
+  test: /.(png|woff|woff2|eot|ttf|svg)$/,
+  loader: 'url-loader',
+  include: path.resolve(appDirectory, 'assets/fonts'),
+};*/
+
+const cssStyleLoader = {
+  test: /\.css$/i,
+  use: ['style-loader', 'css-loader'],
+};
+
 module.exports = {
   entry: [
     // load any web API polyfills
@@ -56,7 +67,7 @@ module.exports = {
   },
 
   module: {
-    rules: [babelLoaderConfiguration, imageLoaderConfiguration],
+    rules: [babelLoaderConfiguration, imageLoaderConfiguration, cssStyleLoader],
   },
 
   resolve: {

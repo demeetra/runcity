@@ -11,7 +11,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@fontsource/rubik": "^4.5.14",
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "css-loader": "^6.7.3",
     "react": "18.1.0",
     "react-dom": "^18.1.0",
     "react-native": "0.70.6",
@@ -20,7 +22,8 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "style-loader": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

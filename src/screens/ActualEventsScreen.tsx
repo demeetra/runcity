@@ -50,7 +50,6 @@ export const ActualEventsScreen = () => {
             <TouchableOpacity
               onPress={() => dispatch(changeScreen({eventId: item.id}))}>
               <View style={styles.eventCardView}>
-              <Image style={[styles.image, {height: '100px'}]} source={require('../../assets/test.png')} />
                 <Text style={styles.eventCardPlace}>
                   {item.place.toUpperCase()}
                 </Text>

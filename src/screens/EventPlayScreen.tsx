@@ -68,7 +68,7 @@ function formatCheckpoint(
             <Image
               source={{uri}}
               // eslint-disable-next-line react-native/no-inline-styles
-              style={{width: deviceWidth, height: 200, resizeMode: 'contain'}}
+              style={{width: deviceWidth, height: 160, borderRadius: 8, resizeMode: 'contain'}}
             />
           );
         }
@@ -77,7 +77,7 @@ function formatCheckpoint(
             <TouchableOpacity onPress={() => Linking.openURL(uri)}>
               <Text
                 // eslint-disable-next-line react-native/no-inline-styles
-                style={{color: 'blue'}}>
+                style={{color: 'white'}}>
                 (ссылка на аудио)
               </Text>
             </TouchableOpacity>
@@ -202,10 +202,14 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
+    borderRadius: 8,
     borderWidth: 1,
-    padding: 10,
+    padding: 8,
+    margin:8,
   },
   eventText: {
+    color: '#414141',
+    fontSize: 20,
     textAlign: 'center',
   },
 });

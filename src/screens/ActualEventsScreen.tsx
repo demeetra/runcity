@@ -104,9 +104,11 @@ const styles = StyleSheet.create({
   eventCardName: {
     color: '#414141',
     textAlign: 'left',
+    fontFamily: 'Rubik',
     fontSize: 20,
   },
   eventCardText: {
+    fontFamily: 'Rubik',
     color: '#414141',
     textAlign: 'left',
     fontSize: 20,

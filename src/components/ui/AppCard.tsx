@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#F1F1EF',
     shadowRadius: 2,
     shadowOpacity: 0.3,
     shadowOffset: {width: 2, height: 2},

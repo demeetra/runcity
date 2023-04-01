@@ -78,7 +78,7 @@ export const MainLayout = () => {
   return (
     <View style={styles.wrapper}>
       <Navbar
-        name="Бегущий Город"
+        name="События"
         nameAction={nameAction}
         backAction={backAction}
         profileAction={profileAction}
@@ -92,11 +92,15 @@ export const MainLayout = () => {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: 'Rubik',
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: 16,
   },
-  wrapper: {},
+  wrapper: {
+    fontFamily: 'Rubik',
+  },
   signIn: {
+    fontFamily: 'Rubik',
     flex: 1,
   },
 });

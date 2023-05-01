@@ -1,8 +1,10 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector, useDispatch} from 'react-redux';
 import {AppLoader} from './components/ui/AppLoader';
-import {Navbar} from './components/Navbar';
+import {AppButton} from './components/ui/AppButton';
 import {THEME} from './theme';
 import LoginScreen from 'react-native-login-screen';
 import {ActualEventsScreen} from './screens/ActualEventsScreen';
@@ -10,15 +12,26 @@ import {EventInfoScreen} from './screens/EventInfoScreen';
 import {EventPlayScreen} from './screens/EventPlayScreen';
 import {ProfileScreen} from './screens/ProfileScreen';
 
-import {changeScreen} from './store/ScreenAction';
 import {userSignIn} from './store/UserAction';
+
+const Stack = createNativeStackNavigator();
+const linking = {
+  prefixes: [
+    /* your linking prefixes */
+  ],
+  config: {
+    initialRouteName: 'ActualEvents',
+    screens: {
+      ActualEvents: 'ru/events',
+      EventInfo: 'ru/events/:eventId',
+      EventPlay: 'ru/events/:eventId/online',
+    },
+  },
+};
 
 export const MainLayout = () => {
   const dispatch = useDispatch();
   const {loading} = useSelector(state => state.runcityApiReducer);
-  const {eventId, eventPlay, inProfile} = useSelector(
-    state => state.screenReducer,
-  );
   const {user, error: userLoginError} = useSelector(state => state.userReducer);
 
   if (!user) {
@@ -47,45 +60,33 @@ export const MainLayout = () => {
     );
   }
 
-  const profileAction = () => dispatch(changeScreen({inProfile: true}));
-  const nameAction = () =>
-    dispatch(
-      changeScreen({
-        eventId: null,
-        eventPlay: null,
-        inProfile: null,
-        checkpointId: null,
-      }),
-    );
-
-  let content = null;
-  let backAction = null;
-
-  if (inProfile) {
-    content = <ProfileScreen />;
-    backAction = () => dispatch(changeScreen({inProfile: null}));
-  } else if (eventId == null) {
-    content = <ActualEventsScreen />;
-  } else if (eventPlay) {
-    content = <EventPlayScreen />;
-    backAction = () => dispatch(changeScreen({eventPlay: null}));
-  } else {
-    content = <EventInfoScreen />;
-    backAction = () => dispatch(changeScreen({eventId: null}));
-  }
-
   const profileName = user.first_name + '\n' + user.last_name;
   return (
     <View style={styles.wrapper}>
-      <Navbar
-        name="События"
-        nameAction={nameAction}
-        backAction={backAction}
-        profileAction={profileAction}
-        profileName={profileName}
-      />
       {loading > 0 && <AppLoader />}
-      <View style={styles.container}>{content}</View>
+      <NavigationContainer linking={linking}>
+        <Stack.Navigator
+          screenOptions={({navigation}) => ({
+            headerTitleStyle: {},
+            headerRight: () => (
+              <AppButton
+                onPress={() => {
+                  navigation.navigate('Profile');
+                }}>
+                {profileName}
+              </AppButton>
+            ),
+          })}>
+          <Stack.Screen
+            name="ActualEvents"
+            component={ActualEventsScreen}
+            options={{title: 'События'}}
+          />
+          <Stack.Screen name="EventInfo" component={EventInfoScreen} />
+          <Stack.Screen name="EventPlay" component={EventPlayScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 };
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     fontFamily: 'Rubik',
+    flex: 1,
   },
   signIn: {
     fontFamily: 'Rubik',

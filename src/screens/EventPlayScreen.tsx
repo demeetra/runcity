@@ -114,8 +114,9 @@ function formatCheckpoint(
   );
 }
 
-export const EventPlayScreen = () => {
-  const {eventId, checkpointId} = useSelector(state => state.screenReducer);
+export const EventPlayScreen = ({route}) => {
+  const {eventId} = route.params;
+  const {checkpointId} = useSelector(state => state.screenReducer);
   const onlineState = useSelector(state => state.onlineReducer);
   const {titles, checkpoints} = useSelector(state => state.eventPlayReducer);
   const [textAddr, setTextAddr] = useState({});

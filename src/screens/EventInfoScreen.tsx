@@ -3,11 +3,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {THEME} from '../theme';
 import {AppButton} from '../components/ui/AppButton';
-import {changeScreen} from '../store/ScreenAction';
 import {fetchEventInfo} from '../store/EventInfoAction';
 
-export const EventInfoScreen = () => {
-  const {eventId} = useSelector(state => state.screenReducer);
+export const EventInfoScreen = ({route, navigation}) => {
+  const {eventId} = route.params;
   const {eventInfo} = useSelector(state => state.eventInfoReducer);
 
   const [deviceWidth] = useState(
@@ -28,7 +27,7 @@ export const EventInfoScreen = () => {
     <View style={{width: deviceWidth}}>
       <Text style={styles.nameText}>{eventInfo.name}</Text>
       <Text />
-      <AppButton onPress={() => dispatch(changeScreen({eventPlay: true}))}>
+      <AppButton onPress={() => navigation.navigate('EventPlay', {eventId})}>
         Start
       </AppButton>
       <Text />

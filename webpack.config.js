@@ -53,6 +53,10 @@ const cssStyleLoader = {
 };
 
 module.exports = {
+  devServer: {
+    historyApiFallback: true,
+  },
+
   entry: [
     // load any web API polyfills
     // path.resolve(appDirectory, 'polyfills-web.js'),
@@ -64,6 +68,7 @@ module.exports = {
   output: {
     filename: 'bundle.web.js',
     path: path.resolve(appDirectory, 'dist'),
+    publicPath: '/',
   },
 
   module: {

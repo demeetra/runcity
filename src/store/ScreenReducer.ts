@@ -1,9 +1,6 @@
 import {SCREEN_CHANGE, SCREEN_RESET} from './constants';
 
 const initialState = {
-  eventId: null,
-  eventPlay: null,
-  inProfile: null,
   checkpointId: null,
 };
 

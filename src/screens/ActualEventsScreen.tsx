@@ -10,10 +10,9 @@ import {
   View,
 } from 'react-native';
 import {THEME} from '../theme';
-import {changeScreen} from '../store/ScreenAction';
 import {fetchActualEvents} from '../store/ActualEventsAction';
 
-export const ActualEventsScreen = () => {
+export const ActualEventsScreen = ({navigation}) => {
   const [deviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
@@ -48,7 +47,9 @@ export const ActualEventsScreen = () => {
         renderItem={({item}) => (
           <View>
             <TouchableOpacity
-              onPress={() => dispatch(changeScreen({eventId: item.id}))}>
+              onPress={() =>
+                navigation.navigate('EventInfo', {eventId: item.id})
+              }>
               <View style={styles.eventCardView}>
                 <Text style={styles.eventCardPlace}>
                   {item.place.toUpperCase()}

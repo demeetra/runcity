@@ -10,7 +10,7 @@
 1. win `.\AppData\Local\Android\Sdk\platform-tools\adb.exe -a nodaemon server start`
 2. win `.\AppData\Local\Android\Sdk\emulator\emulator.exe -avd Pixel_3a_API_33_x86_64 -no-snapshot-load`  (last option only for cold boot)
 3. wsl `npx react-native start --host 127.0.0.1`
-4. wsl `npx react-native run-android --variant=debug --deviceId emulator-5554`
+4. wsl `npx react-native run-android --variant=debug --deviceId emulator-5554 --active-arch-only`
 
 ---
 

@@ -5,13 +5,17 @@ import {AppButton} from '../components/ui/AppButton';
 import {THEME} from '../theme';
 import {userLogOut} from '../store/UserAction';
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.userReducer);
 
   const [deviceWidth] = useState(
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
+
+  if (!user) {
+    return navigation.navigate('Login');
+  }
 
   return (
     <View style={{width: deviceWidth}}>

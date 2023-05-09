@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppLoader} from './components/ui/AppLoader';
 import {AppButton} from './components/ui/AppButton';
 import {THEME} from './theme';
-import LoginScreen from 'react-native-login-screen';
 import {ActualEventsScreen} from './screens/ActualEventsScreen';
 import {EventInfoScreen} from './screens/EventInfoScreen';
 import {EventPlayScreen} from './screens/EventPlayScreen';
+import {LoginScreen} from './screens/LoginScreen';
 import {ProfileScreen} from './screens/ProfileScreen';
-
-import {userSignIn} from './store/UserAction';
 
 const Stack = createNativeStackNavigator();
 const linking = {
@@ -25,6 +23,8 @@ const linking = {
       ActualEvents: 'ru/events',
       EventInfo: 'ru/events/:eventId',
       EventPlay: 'ru/events/:eventId/online',
+      Login: 'ru/people/login',
+      Profile: 'ru/people/me',
     },
   },
 };
@@ -34,37 +34,9 @@ export const MainLayout = () => {
     Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
   );
 
-  const dispatch = useDispatch();
   const {loading} = useSelector(state => state.runcityApiReducer);
-  const {user, error: userLoginError} = useSelector(state => state.userReducer);
+  const {user} = useSelector(state => state.userReducer);
 
-  if (!user) {
-    var error_xs = userLoginError && <Text>{userLoginError}</Text>;
-
-    let userEmail = '';
-    let userPassword = '';
-    return (
-      <>
-        <LoginScreen
-          onLoginPress={() => {
-            if (userEmail) {
-              dispatch(userSignIn(userEmail, userPassword));
-            }
-          }}
-          onSignupPress={() => {}}
-          onEmailChange={(value: string) => {
-            userEmail = value;
-          }}
-          onPasswordChange={(password: string) => {
-            userPassword = password;
-          }}
-        />
-        {error_xs}
-      </>
-    );
-  }
-
-  const profileName = user.first_name; // + ' ' + user.last_name;
   return (
     <View style={{...styles.container, width: deviceWidth}}>
       <NavigationContainer linking={linking}>
@@ -75,9 +47,9 @@ export const MainLayout = () => {
             headerRight: () => (
               <AppButton
                 onPress={() => {
-                  navigation.navigate('Profile');
+                  navigation.navigate(user ? 'Profile' : 'Login');
                 }}>
-                {profileName}
+                {user ? user.first_name : 'Login'}
               </AppButton>
             ),
           })}>
@@ -88,6 +60,7 @@ export const MainLayout = () => {
           />
           <Stack.Screen name="EventInfo" component={EventInfoScreen} />
           <Stack.Screen name="EventPlay" component={EventPlayScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
         </Stack.Navigator>
       </NavigationContainer>
@@ -104,9 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    fontFamily: 'Rubik',
-  },
-  signIn: {
     fontFamily: 'Rubik',
   },
 });

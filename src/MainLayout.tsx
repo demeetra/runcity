@@ -63,7 +63,6 @@ export const MainLayout = () => {
   const profileName = user.first_name; // + ' ' + user.last_name;
   return (
     <View style={styles.container}>
-      {loading > 0 && <AppLoader />}
       <NavigationContainer linking={linking}>
         <Stack.Navigator
           screenOptions={({navigation}) => ({
@@ -88,6 +87,7 @@ export const MainLayout = () => {
           <Stack.Screen name="Profile" component={ProfileScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      {loading > 0 && <AppLoader />}
     </View>
   );
 };

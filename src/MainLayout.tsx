@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector, useDispatch} from 'react-redux';
@@ -30,6 +30,10 @@ const linking = {
 };
 
 export const MainLayout = () => {
+  const [deviceWidth] = useState(
+    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
+  );
+
   const dispatch = useDispatch();
   const {loading} = useSelector(state => state.runcityApiReducer);
   const {user, error: userLoginError} = useSelector(state => state.userReducer);
@@ -62,7 +66,7 @@ export const MainLayout = () => {
 
   const profileName = user.first_name; // + ' ' + user.last_name;
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, width: deviceWidth}}>
       <NavigationContainer linking={linking}>
         <Stack.Navigator
           screenOptions={({navigation}) => ({

@@ -3,4 +3,6 @@ export const THEME = {
   GREY_COLOR: '#B1B1B1',
   MAIN_COLOR: '#C14146',
   PADDING_HORIZONTAL: 16,
+  BAR_DARK: '#222',
+  BAR_LIGHT: '#F3F3F3',
 };

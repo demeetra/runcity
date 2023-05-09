@@ -48,11 +48,6 @@ export const EventInfoScreen = ({route, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   nameText: {
     textAlign: 'center',
   },

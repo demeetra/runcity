@@ -83,11 +83,6 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   eventCardView: {
     minHeight: 100,
     backgroundColor: '#FCFCFC',

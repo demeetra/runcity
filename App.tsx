@@ -9,17 +9,20 @@ import {
 import {PersistGate} from 'redux-persist/integration/react';
 import {MainLayout} from './src/MainLayout';
 import {store, persistor} from './src/store/store';
+import {BAR_DARK, BAR_LIGHT} from './src/theme';
 
 const App = () => {
-  const styles = useColorScheme() === 'dark' ? stylesDark : stylesLight;
+  let barStyle = 'light-content';
+  let backgroundColor = BAR_LIGHT;
+  if (useColorScheme() === 'dark') {
+    barStyle = 'dark-content';
+    backgroundColor = BAR_DARK;
+  }
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SafeAreaView style={styles.backgroundStyle}>
-          <StatusBar
-            barStyle={styles.barStyle}
-            backgroundColor={styles.backgroundStyle.backgroundColor}
-          />
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
           <MainLayout />
         </SafeAreaView>
       </PersistGate>
@@ -27,25 +30,11 @@ const App = () => {
   );
 };
 
-const stylesCommon = {
-  backgroundStyle: {
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
     flex: 1,
-  },
-};
-
-const stylesLight = StyleSheet.create({
-  barStyle: 'light-content',
-  backgroundStyle: {
-    ...stylesCommon.backgroundStyle,
-    backgroundColor: '#F3F3F3',
-  },
-});
-
-const stylesDark = StyleSheet.create({
-  barStyle: 'dark-content',
-  backgroundStyle: {
-    ...stylesCommon.backgroundStyle,
-    backgroundColor: '#222',
+    'min-height': '100vh',
   },
 });
 

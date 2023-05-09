@@ -40,8 +40,7 @@ export const MainLayout = () => {
     let userEmail = '';
     let userPassword = '';
     return (
-      <View style={styles.signIn}>
-        {error_xs}
+      <>
         <LoginScreen
           onLoginPress={() => {
             if (userEmail) {
@@ -56,18 +55,20 @@ export const MainLayout = () => {
             userPassword = password;
           }}
         />
-      </View>
+        {error_xs}
+      </>
     );
   }
 
-  const profileName = user.first_name + '\n' + user.last_name;
+  const profileName = user.first_name; // + ' ' + user.last_name;
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.container}>
       {loading > 0 && <AppLoader />}
       <NavigationContainer linking={linking}>
         <Stack.Navigator
           screenOptions={({navigation}) => ({
-            headerTitleStyle: {},
+            headerTitleAlign: 'center',
+            headerTitleStyle: styles.header,
             headerRight: () => (
               <AppButton
                 onPress={() => {
@@ -96,13 +97,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik',
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: 16,
-  },
-  wrapper: {
-    fontFamily: 'Rubik',
     flex: 1,
+  },
+  header: {
+    fontFamily: 'Rubik',
   },
   signIn: {
     fontFamily: 'Rubik',
-    flex: 1,
   },
 });

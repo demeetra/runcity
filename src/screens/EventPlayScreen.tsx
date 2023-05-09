@@ -114,10 +114,11 @@ function formatCheckpoint(
   );
 }
 
-export const EventPlayScreen = ({route}) => {
+export const EventPlayScreen = ({navigation, route}) => {
   const {eventId} = route.params;
   const {checkpointId} = useSelector(state => state.screenReducer);
   const onlineState = useSelector(state => state.onlineReducer);
+  const {user} = useSelector(state => state.userReducer);
   const {titles, checkpoints} = useSelector(state => state.eventPlayReducer);
   const [textAddr, setTextAddr] = useState({});
   const [textAnsw, setTextAnsw] = useState({});
@@ -157,6 +158,10 @@ export const EventPlayScreen = ({route}) => {
     loadOnline();
   }, [loadOnline]);
   console.log('onlineState', onlineState);
+
+  if (!user) {
+    return navigation.navigate('Login');
+  }
 
   const checkpointsView = (
     <FlatList

@@ -14,6 +14,7 @@ export const ProfileScreen = ({navigation}) => {
   );
 
   if (!user) {
+    navigation.popToTop();
     return navigation.navigate('Login');
   }
 

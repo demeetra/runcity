@@ -6,10 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Runcity</title>
   </head>
-  <body style="min-height: 100%">
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+    body {
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+    #root {
+      display: flex;
+      height: 100%;
+    }
+  </style>
+  <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="app-root"></div>
+    <div id="root"></div>
   </body>
 </html>

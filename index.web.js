@@ -8,10 +8,10 @@ if (module.hot) {
   module.hot.accept();
 }
 AppRegistry.registerComponent('React Native Web', () => App);
-createRoot(document.getElementById('app-root')).render(<App />);
+createRoot(document.getElementById('root')).render(<App />);
 /*
 AppRegistry.runApplication('React Native Web', {
   initialProps: {},
-  rootTag: document.getElementById('app-root'),
+  rootTag: document.getElementById('root'),
 });
 */

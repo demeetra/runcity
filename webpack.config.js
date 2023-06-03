@@ -13,6 +13,7 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, 'src'),
     //path.resolve(appDirectory, 'node_modules/react-native-uncompiled'),
     path.resolve(appDirectory, 'node_modules/react-native-login-screen'),
+    path.resolve(appDirectory, 'node_modules/react-native-reanimated'),
     path.resolve(
       appDirectory,
       'node_modules/react-native-text-input-interactive',
@@ -24,7 +25,11 @@ const babelLoaderConfiguration = {
       cacheDirectory: true,
       presets: ['module:metro-react-native-babel-preset'],
       //presets: ['react-native'],
-      //plugins: ['react-native-web'],
+      plugins: [
+        // 'react-native-web',
+        '@babel/plugin-proposal-export-namespace-from',
+        'react-native-reanimated/plugin', // should be the last
+      ],
     },
   },
 };
@@ -92,9 +97,11 @@ module.exports = {
       favicon: path.join(appDirectory, 'favicon.ico'),
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin({JEST_WORKER_ID: null}),
     new webpack.DefinePlugin({
       // See: <https://github.com/necolas/react-native-web/issues/349>
       __DEV__: JSON.stringify(true),
+      process: {env: {}},
     }),
   ],
 };

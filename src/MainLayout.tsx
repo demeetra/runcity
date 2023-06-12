@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {AppLoader} from './components/ui/AppLoader';
-import {AppButton} from './components/ui/AppButton';
+import {Hamburger} from './components/Hamburger';
 import {THEME} from './theme';
 import {ActualEventsScreen} from './screens/ActualEventsScreen';
 import {EventInfoScreen} from './screens/EventInfoScreen';
@@ -13,6 +13,7 @@ import {LoginScreen} from './screens/LoginScreen';
 import {ProfileScreen} from './screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
+
 const linking = {
   prefixes: [
     /* your linking prefixes */
@@ -20,7 +21,9 @@ const linking = {
   config: {
     initialRouteName: 'ActualEvents',
     screens: {
-      ActualEvents: 'ru/events',
+      ActualEvents: {
+        path: 'ru/events',
+      },
       EventInfo: 'ru/events/:eventId',
       EventPlay: 'ru/events/:eventId/online',
       Login: 'ru/people/login',
@@ -35,24 +38,15 @@ export const MainLayout = () => {
   );
 
   const {loading} = useSelector(state => state.runcityApiReducer);
-  const {user} = useSelector(state => state.userReducer);
-
   return (
     <View style={{...styles.container, width: deviceWidth}}>
       <NavigationContainer linking={linking}>
         <Stack.Navigator
-          screenOptions={({navigation}) => ({
+          screenOptions={{
             headerTitleAlign: 'center',
             headerTitleStyle: styles.header,
-            headerRight: () => (
-              <AppButton
-                onPress={() => {
-                  navigation.navigate(user ? 'Profile' : 'Login');
-                }}>
-                {user ? user.first_name : 'Login'}
-              </AppButton>
-            ),
-          })}>
+            headerRight: Hamburger,
+          }}>
           <Stack.Screen
             name="ActualEvents"
             component={ActualEventsScreen}
@@ -60,8 +54,16 @@ export const MainLayout = () => {
           />
           <Stack.Screen name="EventInfo" component={EventInfoScreen} />
           <Stack.Screen name="EventPlay" component={EventPlayScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{animation: 'slide_from_right', title: ''}}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{animation: 'slide_from_right', title: ''}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       {loading > 0 && <AppLoader />}
@@ -72,8 +74,8 @@ export const MainLayout = () => {
 const styles = StyleSheet.create({
   container: {
     fontFamily: 'Rubik',
-    paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    paddingVertical: 16,
+    // paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    // paddingVertical: 16,
     flex: 1,
   },
   header: {

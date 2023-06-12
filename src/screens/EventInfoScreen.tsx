@@ -25,7 +25,7 @@ export const EventInfoScreen = ({route, navigation}) => {
   }, [loadEventInfo]);
 
   useEffect(() => {
-    navigation.setOptions({headerTitle: eventInfo.name});
+    navigation.setOptions({headerTitle: eventInfo?.name});
   }, [navigation, eventInfo]);
 
   return (

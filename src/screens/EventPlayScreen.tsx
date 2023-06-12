@@ -159,7 +159,7 @@ export const EventPlayScreen = ({navigation, route}) => {
   }, [loadOnline]);
 
   useEffect(() => {
-    navigation.setOptions({headerTitle: onlineState.competition.name});
+    navigation.setOptions({headerTitle: onlineState?.competition?.name});
   }, [navigation, onlineState]);
 
   console.log('onlineState', onlineState);

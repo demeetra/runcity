@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Dimensions, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import RNLoginScreen from 'react-native-login-screen';
 import {THEME} from '../theme';
 import {userSignIn} from '../store/UserAction';
@@ -8,10 +8,6 @@ import {userSignIn} from '../store/UserAction';
 export const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {user, error: userLoginError} = useSelector(state => state.userReducer);
-
-  const [deviceWidth] = useState(
-    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
-  );
 
   if (user) {
     navigation.popToTop();
@@ -22,8 +18,10 @@ export const LoginScreen = ({navigation}) => {
 
   let userEmail = '';
   let userPassword = '';
+  // TODO: use own component
+  // RNLoginScreen uses Dimensions.get("screen").width witch is not good for web
   return (
-    <>
+    <View style={styles.container}>
       <RNLoginScreen
         onLoginPress={() => {
           if (userEmail) {
@@ -37,16 +35,21 @@ export const LoginScreen = ({navigation}) => {
         onPasswordChange={(password: string) => {
           userPassword = password;
         }}
-        style={{width: deviceWidth}}
+        style={{}}
         loginTextStyle={styles.text}
         signupTextStyle={styles.text}
       />
       {error_xs}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    paddingVertical: THEME.PADDING_VERTICAL,
+    flex: 1,
+  },
   text: {
     fontFamily: 'Rubik',
   },

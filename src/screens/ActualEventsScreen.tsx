@@ -1,7 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  Dimensions,
   FlatList,
   Image,
   StyleSheet,
@@ -13,10 +12,6 @@ import {THEME} from '../theme';
 import {fetchActualEvents} from '../store/ActualEventsAction';
 
 export const ActualEventsScreen = ({navigation}) => {
-  const [deviceWidth] = useState(
-    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
-  );
-
   const {actualEvents} = useSelector(state => state.actualEventsReducer);
   const dispatch = useDispatch();
 
@@ -40,7 +35,7 @@ export const ActualEventsScreen = ({navigation}) => {
   }
 
   return (
-    <View style={{width: deviceWidth}}>
+    <View style={styles.container}>
       <FlatList
         data={actualEvents}
         keyExtractor={({id}) => id}
@@ -72,6 +67,10 @@ export const ActualEventsScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    paddingVertical: THEME.PADDING_VERTICAL,
+  },
   imgWrap: {
     alignItems: 'center',
     justifyContent: 'center',

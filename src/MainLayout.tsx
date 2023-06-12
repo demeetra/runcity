@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {AppLoader} from './components/ui/AppLoader';
 import {Hamburger} from './components/Hamburger';
-import {THEME} from './theme';
 import {ActualEventsScreen} from './screens/ActualEventsScreen';
 import {EventInfoScreen} from './screens/EventInfoScreen';
 import {EventPlayScreen} from './screens/EventPlayScreen';
@@ -33,13 +32,9 @@ const linking = {
 };
 
 export const MainLayout = () => {
-  const [deviceWidth] = useState(
-    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
-  );
-
   const {loading} = useSelector(state => state.runcityApiReducer);
   return (
-    <View style={{...styles.container, width: deviceWidth}}>
+    <View style={{...styles.container}}>
       <NavigationContainer linking={linking}>
         <Stack.Navigator
           screenOptions={{
@@ -74,8 +69,6 @@ export const MainLayout = () => {
 const styles = StyleSheet.create({
   container: {
     fontFamily: 'Rubik',
-    // paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    // paddingVertical: 16,
     flex: 1,
   },
   header: {

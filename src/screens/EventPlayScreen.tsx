@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  Dimensions,
   FlatList,
   Image,
   Linking,
@@ -23,7 +22,6 @@ import {fetchOnline} from '../store/OnlineAction';
 
 function formatCheckpoint(
   cpinfo,
-  deviceWidth,
   doUpdateCheckpointEventPlay,
   textAddr,
   setTextAddr,
@@ -69,7 +67,6 @@ function formatCheckpoint(
               source={{uri}}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
-                width: deviceWidth,
                 height: 160,
                 borderRadius: 8,
                 resizeMode: 'contain',
@@ -131,10 +128,6 @@ export const EventPlayScreen = ({navigation, route}) => {
     }
   }, [titles]);*/
 
-  const [deviceWidth] = useState(
-    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
-  );
-
   const loadTitlesEventPlay = useCallback(
     () => dispatch(fetchTitlesEventPlay(eventId)),
     [dispatch, eventId],
@@ -190,7 +183,6 @@ export const EventPlayScreen = ({navigation, route}) => {
       ? null
       : formatCheckpoint(
           checkpoints[checkpointId],
-          deviceWidth,
           (...args) => dispatch(updateCheckpointEventPlay(...args)),
           textAddr,
           setTextAddr,
@@ -199,7 +191,7 @@ export const EventPlayScreen = ({navigation, route}) => {
         );
 
   return (
-    <View style={{width: deviceWidth}}>
+    <View style={styles.container}>
       <Text style={styles.eventText}>
         Team {onlineState.team && onlineState.team.snumber_full}
       </Text>
@@ -211,6 +203,10 @@ export const EventPlayScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    paddingVertical: THEME.PADDING_VERTICAL,
+  },
   input: {
     height: 40,
     borderRadius: 8,

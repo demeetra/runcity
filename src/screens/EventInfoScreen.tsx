@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {THEME} from '../theme';
 import {AppButton} from '../components/ui/AppButton';
 import {fetchEventInfo} from '../store/EventInfoAction';
@@ -8,10 +8,6 @@ import {fetchEventInfo} from '../store/EventInfoAction';
 export const EventInfoScreen = ({route, navigation}) => {
   const {eventId} = route.params;
   const {eventInfo} = useSelector(state => state.eventInfoReducer);
-
-  const [deviceWidth] = useState(
-    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2,
-  );
 
   const dispatch = useDispatch();
 
@@ -29,7 +25,7 @@ export const EventInfoScreen = ({route, navigation}) => {
   }, [navigation, eventInfo]);
 
   return (
-    <View style={{width: deviceWidth}}>
+    <View style={styles.container}>
       <Text style={styles.nameText}>{eventInfo.name}</Text>
       <Text />
       <AppButton onPress={() => navigation.navigate('EventPlay', {eventId})}>
@@ -46,13 +42,17 @@ export const EventInfoScreen = ({route, navigation}) => {
             ),
         }}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={{width: deviceWidth, height: 600, resizeMode: 'contain'}}
+        style={{height: 600, resizeMode: 'contain'}}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    paddingVertical: THEME.PADDING_VERTICAL,
+  },
   nameText: {
     textAlign: 'center',
   },

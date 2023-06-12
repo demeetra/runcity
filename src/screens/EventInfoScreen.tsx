@@ -19,9 +19,14 @@ export const EventInfoScreen = ({route, navigation}) => {
     () => dispatch(fetchEventInfo(eventId)),
     [dispatch, eventId],
   );
+
   useEffect(() => {
     loadEventInfo();
   }, [loadEventInfo]);
+
+  useEffect(() => {
+    navigation.setOptions({headerTitle: eventInfo.name});
+  }, [navigation, eventInfo]);
 
   return (
     <View style={{width: deviceWidth}}>

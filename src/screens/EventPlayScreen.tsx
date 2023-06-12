@@ -157,9 +157,15 @@ export const EventPlayScreen = ({navigation, route}) => {
   useEffect(() => {
     loadOnline();
   }, [loadOnline]);
+
+  useEffect(() => {
+    navigation.setOptions({headerTitle: onlineState.competition.name});
+  }, [navigation, onlineState]);
+
   console.log('onlineState', onlineState);
 
   if (!user) {
+    navigation.pop(1);
     return navigation.navigate('Login');
   }
 

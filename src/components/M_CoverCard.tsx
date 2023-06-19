@@ -13,5 +13,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingBottom: '50%',
     resizeMode: 'contain',
+    backgroundColor: 'black', // debug
   },
 });

@@ -19,7 +19,8 @@ export const O_Card = ({item}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black', // debug
+    backgroundColor: '#FCFCFC',
+    overflow: 'hidden',
     borderRadius: 8,
   },
 });

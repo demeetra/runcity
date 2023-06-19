@@ -19,7 +19,6 @@ export const M_CaptionOnCard = ({item}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FCFCFC',
     padding: 8,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,

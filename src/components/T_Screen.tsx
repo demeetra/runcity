@@ -13,5 +13,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: THEME.PADDING_VERTICAL,
     fontFamily: 'Rubik',
+    backgroundColor: '#F1F1EF', // TODO: fix height of parrent containers
   },
 });

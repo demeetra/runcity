@@ -47,8 +47,16 @@ export const MainLayout = () => {
             component={ActualEventsScreen}
             options={{title: 'События'}}
           />
-          <Stack.Screen name="EventInfo" component={EventInfoScreen} />
-          <Stack.Screen name="EventPlay" component={EventPlayScreen} />
+          <Stack.Screen
+            name="EventInfo"
+            component={EventInfoScreen}
+            options={{title: ''}}
+          />
+          <Stack.Screen
+            name="EventPlay"
+            component={EventPlayScreen}
+            options={{title: ''}}
+          />
           <Stack.Screen
             name="Login"
             component={LoginScreen}

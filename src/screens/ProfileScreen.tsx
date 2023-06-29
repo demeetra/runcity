@@ -1,13 +1,13 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {StyleSheet, Text, View} from 'react-native';
-import {AppButton} from '../components/ui/AppButton';
-import {THEME} from '../theme';
 import {userLogOut} from '../store/UserAction';
+import {T_Profile} from '../components/T_Profile';
+import {T_Screen} from '../components/T_Screen';
 
 export const ProfileScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.userReducer);
+  const doLogout = () => dispatch(userLogOut()); // TODO: move to subcomponent
 
   if (!user) {
     navigation.popToTop();
@@ -15,19 +15,8 @@ export const ProfileScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{JSON.stringify(user, null, 2)}</Text>
-      <AppButton onPress={() => dispatch(userLogOut())}>LogOut</AppButton>
-    </View>
+    <T_Screen>
+      <T_Profile user={user} doLogout={doLogout} />
+    </T_Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    paddingVertical: THEME.PADDING_VERTICAL,
-  },
-  text: {
-    textAlign: 'center',
-  },
-});

@@ -21,6 +21,7 @@ export const AppButton = props => {
           ...styles.button,
           backgroundColor: props.color || THEME.MAIN_COLOR,
           opacity: props.opacity == null ? 1 : props.opacity,
+          ...props.style,
         }}>
         <AppTextBold style={styles.text}>{props.children}</AppTextBold>
       </View>

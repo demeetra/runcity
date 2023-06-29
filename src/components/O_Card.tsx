@@ -11,7 +11,7 @@ export const O_Card = ({item}) => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('EventInfo', {eventId: item.id})}>
-      <M_CoverCard item={item} />
+      <M_CoverCard city_id={item.city_id} />
       <M_CaptionOnCard item={item} />
     </TouchableOpacity>
   );

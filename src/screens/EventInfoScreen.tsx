@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {THEME} from '../theme';
-import {AppButton} from '../components/ui/AppButton';
 import {fetchEventInfo} from '../store/EventInfoAction';
+import {T_EventInfo} from '../components/T_EventInfo';
+import {T_Screen} from '../components/T_Screen';
 
 export const EventInfoScreen = ({route, navigation}) => {
   const {eventId} = route.params;
@@ -24,36 +23,11 @@ export const EventInfoScreen = ({route, navigation}) => {
     navigation.setOptions({headerTitle: eventInfo?.name});
   }, [navigation, eventInfo]);
 
+  const doStart = () => navigation.navigate('EventPlay', {eventId});
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.nameText}>{eventInfo.name}</Text>
-      <Text />
-      <AppButton onPress={() => navigation.navigate('EventPlay', {eventId})}>
-        Start
-      </AppButton>
-      <Text />
-      <Image
-        source={{
-          uri:
-            eventInfo.online_img1_uri &&
-            eventInfo.online_img1_uri.replace(
-              /img.public.runcitytest.org/,
-              'img.runcity.org',
-            ),
-        }}
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{height: 600, resizeMode: 'contain'}}
-      />
-    </View>
+    <T_Screen hasData={eventInfo !== null}>
+      <T_EventInfo item={eventInfo} doStart={doStart} />
+    </T_Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    paddingVertical: THEME.PADDING_VERTICAL,
-  },
-  nameText: {
-    textAlign: 'center',
-  },
-});

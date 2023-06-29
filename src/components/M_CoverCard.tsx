@@ -20,13 +20,13 @@ const knownImages = Platform.select({
   },
 });
 
-export const M_CoverCard = ({item}) => {
+export const M_CoverCard = ({city_id}) => {
   // TODO: correct image uri as argument
   // TODO: use external images
   const imgId =
-    item.city_id <= 2
-      ? item.city_id
-      : 3 + ((item.city_id * 19 + 7) % (Object.keys(knownImages).length - 2));
+    city_id <= 2
+      ? city_id
+      : 3 + ((city_id * 19 + 7) % (Object.keys(knownImages).length - 2));
   return <Image style={styles.image} source={knownImages[imgId]} />;
 };
 
